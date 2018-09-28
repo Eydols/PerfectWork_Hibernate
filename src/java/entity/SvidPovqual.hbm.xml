@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 28.09.2018 20:38:18 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entity.SvidPovqual" table="svid_povqual" catalog="handbook" optimistic-lock="version">
+        <id name="manId" type="int">
+            <column name="man_id" />
+            <generator class="foreign">
+                <param name="property">man</param>
+            </generator>
+        </id>
+        <one-to-one name="man" class="entity.Man" constrained="true"></one-to-one>
+        <property name="image" type="string">
+            <column name="image" length="65535" />
+        </property>
+        <property name="content" type="string">
+            <column name="content" length="65535" />
+        </property>
+    </class>
+</hibernate-mapping>

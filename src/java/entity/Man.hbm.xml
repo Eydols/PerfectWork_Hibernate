@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 28.09.2018 20:38:18 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entity.Man" table="man" catalog="handbook" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="sprFirm" class="entity.SprFirm" fetch="select">
+            <column name="firm_id" />
+        </many-to-one>
+        <property name="surname" type="string">
+            <column name="surname" length="45" />
+        </property>
+        <property name="name" type="string">
+            <column name="name" length="45" />
+        </property>
+        <property name="otchestvo" type="string">
+            <column name="otchestvo" length="45" />
+        </property>
+        <property name="birthDate" type="string">
+            <column name="birth_date" length="100" />
+        </property>
+        <property name="doljnostId" type="java.lang.Integer">
+            <column name="doljnost_id" />
+        </property>
+        <property name="firm2Id" type="java.lang.Integer">
+            <column name="firm2_id" />
+        </property>
+        <property name="doljnost2Id" type="java.lang.Integer">
+            <column name="doljnost2_id" />
+        </property>
+        <property name="photo" type="string">
+            <column name="photo" length="150" />
+        </property>
+        <one-to-one name="trudBook" class="entity.TrudBook"></one-to-one>
+        <set name="udPoots" table="ud_poot" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="man_id" />
+            </key>
+            <one-to-many class="entity.UdPoot" />
+        </set>
+        <set name="diplomVuzs" table="diplom_vuz" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="man_id" />
+            </key>
+            <one-to-many class="entity.DiplomVuz" />
+        </set>
+        <one-to-one name="passport" class="entity.Passport"></one-to-one>
+        <one-to-one name="svidPovqual" class="entity.SvidPovqual"></one-to-one>
+    </class>
+</hibernate-mapping>

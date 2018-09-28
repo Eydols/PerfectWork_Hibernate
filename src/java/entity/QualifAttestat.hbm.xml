@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 28.09.2018 20:38:18 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entity.QualifAttestat" table="qualif_attestat" catalog="handbook" optimistic-lock="version">
+        <id name="image" type="string">
+            <column name="image" length="250" />
+            <generator class="assigned" />
+        </id>
+        <property name="manId" type="java.lang.Integer">
+            <column name="man_id" />
+        </property>
+        <property name="dateOkonch" type="string">
+            <column name="date_okonch" length="10" />
+        </property>
+        <property name="content" type="string">
+            <column name="content" length="250" />
+        </property>
+    </class>
+</hibernate-mapping>
