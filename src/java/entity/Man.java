@@ -2,6 +2,8 @@ package entity;
 // Generated 28.09.2018 20:38:17 by Hibernate Tools 4.3.1
 
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -52,111 +54,144 @@ public class Man  implements java.io.Serializable {
        this.svidPovqual = svidPovqual;
     }
    
-    public int getId() {
-        return this.id;
-    }
+    public int getAge() { //Высчисляет возраст сотрудника через его ДР и возвращает на страницу man.jsp
+    Date currentDate = new Date(); // Возвращает текущую дату
+    Date birthDateForm = null;
+         
+         SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy"); //Класс SimpleDataFormat используется для того, чтобы отображать дату и время в удобном формате
+         try {
+       birthDateForm = format.parse(birthDate);
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
+       long diffrent = currentDate.getTime() - birthDateForm.getTime(); // Количество миллисекунд между датами
+       int age = (int) (diffrent/(24*3600*1000))/365; // Количество лет между датами
+       return age;
+    }       
+
+public int getAgeDays() { //Высчисляет количество дней, которое осталось до ДР сотрудника и возвращает на страницу man.jsp
+    Date currentDate = new Date(); // Возвращает текущую дату
+    Date birthDateForm = null;
+         
+         SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy"); //Класс SimpleDataFormat используется для того, чтобы отображать дату и время в удобном формате
+         try {
+       birthDateForm = format.parse(birthDate);
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
+       long diffrent = currentDate.getTime() - birthDateForm.getTime(); // Количество миллисекунд между датами
+       int days = (int) ((365-((diffrent/(24*3600*1000))%365))+((diffrent/(24*3600*1000))/(365*4))); // Количество дней до следующего дня рождения от текущей даты (учитывая весокосные годы)
+
+       return days;
+    }       
     
-    public void setId(int id) {
-        this.id = id;
-    }
-    public SprFirm getSprFirm() {
-        return this.sprFirm;
-    }
-    
-    public void setSprFirm(SprFirm sprFirm) {
-        this.sprFirm = sprFirm;
-    }
-    public String getSurname() {
-        return this.surname;
-    }
-    
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-    public String getName() {
-        return this.name;
-    }
-    
-    public void setName(String name) {
-        this.name = name;
-    }
-    public String getOtchestvo() {
-        return this.otchestvo;
-    }
-    
-    public void setOtchestvo(String otchestvo) {
-        this.otchestvo = otchestvo;
-    }
-    public String getBirthDate() {
-        return this.birthDate;
-    }
-    
-    public void setBirthDate(String birthDate) {
-        this.birthDate = birthDate;
-    }
-    public Integer getDoljnostId() {
-        return this.doljnostId;
-    }
-    
-    public void setDoljnostId(Integer doljnostId) {
-        this.doljnostId = doljnostId;
-    }
-    public Integer getFirm2Id() {
-        return this.firm2Id;
-    }
-    
-    public void setFirm2Id(Integer firm2Id) {
-        this.firm2Id = firm2Id;
-    }
-    public Integer getDoljnost2Id() {
-        return this.doljnost2Id;
-    }
-    
-    public void setDoljnost2Id(Integer doljnost2Id) {
-        this.doljnost2Id = doljnost2Id;
-    }
-    public String getPhoto() {
-        return this.photo;
-    }
-    
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
-    public TrudBook getTrudBook() {
-        return this.trudBook;
-    }
-    
-    public void setTrudBook(TrudBook trudBook) {
-        this.trudBook = trudBook;
-    }
-    public Set getUdPoots() {
-        return this.udPoots;
-    }
-    
-    public void setUdPoots(Set udPoots) {
-        this.udPoots = udPoots;
-    }
-    public Set getDiplomVuzs() {
-        return this.diplomVuzs;
-    }
-    
-    public void setDiplomVuzs(Set diplomVuzs) {
-        this.diplomVuzs = diplomVuzs;
-    }
-    public Passport getPassport() {
-        return this.passport;
-    }
-    
-    public void setPassport(Passport passport) {
-        this.passport = passport;
-    }
-    public SvidPovqual getSvidPovqual() {
-        return this.svidPovqual;
-    }
-    
-    public void setSvidPovqual(SvidPovqual svidPovqual) {
-        this.svidPovqual = svidPovqual;
-    }
+//<editor-fold defaultstate="collapsed" desc="геттеры/сеттеры">
+public int getId() {
+    return this.id;
+}
+
+public void setId(int id) {
+    this.id = id;
+}
+public SprFirm getSprFirm() {
+    return this.sprFirm;
+}
+
+public void setSprFirm(SprFirm sprFirm) {
+    this.sprFirm = sprFirm;
+}
+public String getSurname() {
+    return this.surname;
+}
+
+public void setSurname(String surname) {
+    this.surname = surname;
+}
+public String getName() {
+    return this.name;
+}
+
+public void setName(String name) {
+    this.name = name;
+}
+public String getOtchestvo() {
+    return this.otchestvo;
+}
+
+public void setOtchestvo(String otchestvo) {
+    this.otchestvo = otchestvo;
+}
+public String getBirthDate() {
+    return this.birthDate;
+}
+
+public void setBirthDate(String birthDate) {
+    this.birthDate = birthDate;
+}
+public Integer getDoljnostId() {
+    return this.doljnostId;
+}
+
+public void setDoljnostId(Integer doljnostId) {
+    this.doljnostId = doljnostId;
+}
+public Integer getFirm2Id() {
+    return this.firm2Id;
+}
+
+public void setFirm2Id(Integer firm2Id) {
+    this.firm2Id = firm2Id;
+}
+public Integer getDoljnost2Id() {
+    return this.doljnost2Id;
+}
+
+public void setDoljnost2Id(Integer doljnost2Id) {
+    this.doljnost2Id = doljnost2Id;
+}
+public String getPhoto() {
+    return this.photo;
+}
+
+public void setPhoto(String photo) {
+    this.photo = photo;
+}
+public TrudBook getTrudBook() {
+    return this.trudBook;
+}
+
+public void setTrudBook(TrudBook trudBook) {
+    this.trudBook = trudBook;
+}
+public Set getUdPoots() {
+    return this.udPoots;
+}
+
+public void setUdPoots(Set udPoots) {
+    this.udPoots = udPoots;
+}
+public Set getDiplomVuzs() {
+    return this.diplomVuzs;
+}
+
+public void setDiplomVuzs(Set diplomVuzs) {
+    this.diplomVuzs = diplomVuzs;
+}
+public Passport getPassport() {
+    return this.passport;
+}
+
+public void setPassport(Passport passport) {
+    this.passport = passport;
+}
+public SvidPovqual getSvidPovqual() {
+    return this.svidPovqual;
+}
+
+public void setSvidPovqual(SvidPovqual svidPovqual) {
+    this.svidPovqual = svidPovqual;
+}
+//</editor-fold>
 
 
 

@@ -1,7 +1,7 @@
 package beans;
 
 
-
+import java.io.Serializable;
 import controllers.ManListController;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @ManagedBean
 @SessionScoped
-public class User {
+public class User implements Serializable {
 
     private String username;
     private String password;

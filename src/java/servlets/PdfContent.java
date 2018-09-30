@@ -6,7 +6,6 @@
 package servlets;
 
 import controllers.ManListController;
-import db.Database;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -50,7 +49,7 @@ public class PdfContent extends HttpServlet {
         int index = Integer.valueOf(request.getParameter("index"));
         String table = request.getParameter("table").toString();
         try (OutputStream out = response.getOutputStream()) {
-            conn = Database.getConnection();
+           // conn = Database.getConnection();
             stmt = conn.createStatement();
             rs = stmt.executeQuery("select content from " + table + " where man_id =" + index + "");
             while (rs.next()) {

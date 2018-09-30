@@ -1,6 +1,9 @@
 package entity;
 // Generated 28.09.2018 20:38:17 by Hibernate Tools 4.3.1
 
+import javax.faces.context.FacesContext;
+
+
 
 
 /**
@@ -54,6 +57,16 @@ public class LeftMenu  implements java.io.Serializable {
     
     public void setPage(String page) {
         this.page = page;
+    }
+    
+    public String getName() {
+        
+        if (FacesContext.getCurrentInstance().getViewRoot().getLocale().toString().equals("en")) {
+            return nameEn;
+        } else {
+            return nameRu;
+        }
+
     }
 
 
