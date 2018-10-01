@@ -72,31 +72,31 @@
                             <h:panelGroup rendered="#{manListController.editModeView and m.edit}"> <!-- данное поле будет появляться только при редактировании -->
                                 <p>
                                     <strong>ДАТА РОЖДЕНИЯ:</strong> 
-                                    <h:inputText value="#{m.birth_date}" styleClass="name_edit"/>
+                                    <h:inputText value="#{m.birthDate}" styleClass="name_edit"/>
                                 </p> 
                             </h:panelGroup>
 
                             <h:panelGroup rendered="#{!manListController.editModeView}"> <!-- данное поле будет появляться только при просмотре -->
                                 <p>                                                  <!-- и зависеть от введенной даты рождения -->
                                     <strong>ВОЗРАСТ:</strong> 
-                                    <h:outputText value="#{m.age}"/>
+                                    <h:outputText value="#{m.birthDate}"/>
                                 </p>
                             </h:panelGroup>
 
                             <p>
-                                <strong>ДОЛЖНОСТЬ:</strong> #{m.doljnost} 
+                                <strong>ДОЛЖНОСТЬ:</strong> #{m.doljnostId} 
                             </p>
 
                             <p>
-                                <strong>ФИРМА:</strong> #{m.firm}
+                                <strong>ФИРМА:</strong> #{m.firmId}
                             </p>
 
                             <p>
-                                <strong>ДОЛЖНОСТЬ2:</strong> #{m.doljnost2} <!-- здесь нужно будет вставить условие: если человек работает на 2х фирмах, -->
+                                <strong>ДОЛЖНОСТЬ2:</strong> #{m.doljnost2Id} <!-- здесь нужно будет вставить условие: если человек работает на 2х фирмах, -->
                             </p>                                            <!-- то для него выводить обе фирмы и обе должности -->
 
                             <p>
-                                <strong>ФИРМА2:</strong> #{m.firm2}
+                                <strong>ФИРМА2:</strong> #{m.firm2Id}
                             </p> 
 
                         </h:column>
@@ -130,11 +130,11 @@
                         </h:column>
                         <!-- обложки документов (окончание) -->
 
-                        <h:column rendered="#{request.isUserInRole('ADMIN')}">
+                     <!--   <h:column rendered="#{request.isUserInRole('ADMIN')}">
                             <h:selectBooleanCheckbox value="#{m.edit}" rendered="#{!manListController.editModeView}">
                                 <f:ajax event="change"/>
                             </h:selectBooleanCheckbox>
-                        </h:column>
+                        </h:column> -->
 
                     </h:dataTable>
                     
