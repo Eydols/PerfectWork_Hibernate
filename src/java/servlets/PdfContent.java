@@ -6,6 +6,7 @@
 package servlets;
 
 import controllers.ManListController;
+import db.DataHelper;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -39,50 +40,25 @@ public class PdfContent extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("application/pdf;charset=UTF-8");
-        Connection conn = null;
-        Statement stmt = null;
-        ResultSet rs = null;
+
         String content = null;
         File file = null;
         FileInputStream fis = null;
 
-        int index = Integer.valueOf(request.getParameter("index"));
+        Integer manId = Integer.valueOf(request.getParameter("manId"));
         String table = request.getParameter("table").toString();
+        
         try (OutputStream out = response.getOutputStream()) {
-           // conn = Database.getConnection();
-            stmt = conn.createStatement();
-            rs = stmt.executeQuery("select content from " + table + " where man_id =" + index + "");
-            while (rs.next()) {
-                content = rs.getString("content").toString();
-            }
+            content = DataHelper.getInstance().getContent(table, manId);
             String s = System.getProperty("user.dir");
             file = new File(s.substring(0, s.length() - 49) + "Documents\\NetBeansProjects\\PerfectWork_JSF\\web\\resources\\" + content);
             fis = new FileInputStream(file);
             byte[] bytesArray = new byte[(int) file.length()];
             fis.read(bytesArray);
             out.write(bytesArray);
-
-        } catch (SQLException ex) {
-            Logger.getLogger(ManListController.class.getName()).log(Level.SEVERE, null, ex);
-
-        }
-        finally {
-            try {
-                if (conn != null) {
-                    conn.close();
-                }
-                if (stmt != null) {
-                    stmt.close();
-                }
-                if (rs != null) {
-                    rs.close();
-                }
-
-            } catch (SQLException ex) {
-                Logger.getLogger(PdfContent.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        }
+    } catch (Exception ex) {
+            ex.printStackTrace();
+    }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

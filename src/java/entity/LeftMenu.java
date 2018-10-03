@@ -1,5 +1,5 @@
 package entity;
-// Generated 01.10.2018 21:54:22 by Hibernate Tools 4.3.1
+// Generated 02.10.2018 21:28:39 by Hibernate Tools 4.3.1
 
 import javax.faces.context.FacesContext;
 
@@ -66,7 +66,6 @@ public class LeftMenu  implements java.io.Serializable {
         } else {
             return nameRu;
         }
-
     }
 
 

@@ -1,9 +1,7 @@
 package entity;
-// Generated 01.10.2018 21:54:22 by Hibernate Tools 4.3.1
+// Generated 02.10.2018 21:28:39 by Hibernate Tools 4.3.1
 
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,22 +12,21 @@ public class Man  implements java.io.Serializable {
 
 
      private int id;
-     private SprFirm sprFirm;
+     private SprDoljnost sprDoljnostByDoljnostId;
+     private SprDoljnost sprDoljnostByDoljnost2Id;
+     private SprFirm sprFirmByFirmId;
+     private SprFirm sprFirmByFirm2Id;
      private String surname;
      private String name;
      private String otchestvo;
      private String birthDate;
-     private Integer firmId;
-     private Integer doljnostId;
-     private Integer firm2Id;
-     private Integer doljnost2Id;
      private String photo;
      private TrudBook trudBook;
      private Set udPoots = new HashSet(0);
      private Set diplomVuzs = new HashSet(0);
      private Passport passport;
      private SvidPovqual svidPovqual;
-     private Boolean edit = false;
+     private Boolean edit;
 
     public Man() {
     }
@@ -38,17 +35,16 @@ public class Man  implements java.io.Serializable {
     public Man(int id) {
         this.id = id;
     }
-    public Man(int id, SprFirm sprFirm, String surname, String name, String otchestvo, String birthDate, Integer firmId, Integer doljnostId, Integer firm2Id, Integer doljnost2Id, String photo, TrudBook trudBook, Set udPoots, Set diplomVuzs, Passport passport, SvidPovqual svidPovqual, Boolean edit) {
+    public Man(int id, SprDoljnost sprDoljnostByDoljnostId, SprDoljnost sprDoljnostByDoljnost2Id, SprFirm sprFirmByFirmId, SprFirm sprFirmByFirm2Id, String surname, String name, String otchestvo, String birthDate, String photo, TrudBook trudBook, Set udPoots, Set diplomVuzs, Passport passport, SvidPovqual svidPovqual, Boolean edit) {
        this.id = id;
-       this.sprFirm = sprFirm;
+       this.sprDoljnostByDoljnostId = sprDoljnostByDoljnostId;
+       this.sprDoljnostByDoljnost2Id = sprDoljnostByDoljnost2Id;
+       this.sprFirmByFirmId = sprFirmByFirmId;
+       this.sprFirmByFirm2Id = sprFirmByFirm2Id;
        this.surname = surname;
        this.name = name;
        this.otchestvo = otchestvo;
        this.birthDate = birthDate;
-       this.firmId = firmId;
-       this.doljnostId = doljnostId;
-       this.firm2Id = firm2Id;
-       this.doljnost2Id = doljnost2Id;
        this.photo = photo;
        this.trudBook = trudBook;
        this.udPoots = udPoots;
@@ -65,12 +61,33 @@ public class Man  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-    public SprFirm getSprFirm() {
-        return this.sprFirm;
+    public SprDoljnost getSprDoljnostByDoljnostId() {
+        return this.sprDoljnostByDoljnostId;
     }
     
-    public void setSprFirm(SprFirm sprFirm) {
-        this.sprFirm = sprFirm;
+    public void setSprDoljnostByDoljnostId(SprDoljnost sprDoljnostByDoljnostId) {
+        this.sprDoljnostByDoljnostId = sprDoljnostByDoljnostId;
+    }
+    public SprDoljnost getSprDoljnostByDoljnost2Id() {
+        return this.sprDoljnostByDoljnost2Id;
+    }
+    
+    public void setSprDoljnostByDoljnost2Id(SprDoljnost sprDoljnostByDoljnost2Id) {
+        this.sprDoljnostByDoljnost2Id = sprDoljnostByDoljnost2Id;
+    }
+    public SprFirm getSprFirmByFirmId() {
+        return this.sprFirmByFirmId;
+    }
+    
+    public void setSprFirmByFirmId(SprFirm sprFirmByFirmId) {
+        this.sprFirmByFirmId = sprFirmByFirmId;
+    }
+    public SprFirm getSprFirmByFirm2Id() {
+        return this.sprFirmByFirm2Id;
+    }
+    
+    public void setSprFirmByFirm2Id(SprFirm sprFirmByFirm2Id) {
+        this.sprFirmByFirm2Id = sprFirmByFirm2Id;
     }
     public String getSurname() {
         return this.surname;
@@ -99,34 +116,6 @@ public class Man  implements java.io.Serializable {
     
     public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
-    }
-    public Integer getFirmId() {
-        return firmId;
-    }
-
-    public void setFirmId(Integer firmId) {
-        this.firmId = firmId;
-    }
-    public Integer getDoljnostId() {
-        return this.doljnostId;
-    }
-    
-    public void setDoljnostId(Integer doljnostId) {
-        this.doljnostId = doljnostId;
-    }
-    public Integer getFirm2Id() {
-        return this.firm2Id;
-    }
-    
-    public void setFirm2Id(Integer firm2Id) {
-        this.firm2Id = firm2Id;
-    }
-    public Integer getDoljnost2Id() {
-        return this.doljnost2Id;
-    }
-    
-    public void setDoljnost2Id(Integer doljnost2Id) {
-        this.doljnost2Id = doljnost2Id;
     }
     public String getPhoto() {
         return this.photo;
@@ -170,47 +159,13 @@ public class Man  implements java.io.Serializable {
     public void setSvidPovqual(SvidPovqual svidPovqual) {
         this.svidPovqual = svidPovqual;
     }
-    
-    public Boolean isEdit() {
+    public Boolean getEdit() {
         return edit;
     }
 
     public void setEdit(Boolean edit) {
         this.edit = edit;
     }
-    
-    /* public int getAge() { //Высчисляет возраст сотрудника через его ДР и возвращает на страницу man.jsp
-    Date currentDate = new Date(); // Возвращает текущую дату
-    Date birthDateForm = null;
-         
-         SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy"); //Класс SimpleDataFormat используется для того, чтобы отображать дату и время в удобном формате
-         try {
-       birthDateForm = format.parse(birthDate);
-       } catch (Exception e) {
-           e.printStackTrace();
-       }
-       long diffrent = currentDate.getTime() - birthDateForm.getTime(); // Количество миллисекунд между датами
-       int age = (int) (diffrent/(24*3600*1000))/365; // Количество лет между датами
-       return age;
-    }       
-
-    public int getAgeDays() { //Высчисляет количество дней, которое осталось до ДР сотрудника и возвращает на страницу man.jsp
-        Date currentDate = new Date(); // Возвращает текущую дату
-        Date birthDateForm = null;
-
-        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy"); //Класс SimpleDataFormat используется для того, чтобы отображать дату и время в удобном формате
-        try {
-            birthDateForm = format.parse(birthDate);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        long diffrent = currentDate.getTime() - birthDateForm.getTime(); // Количество миллисекунд между датами
-        int days = (int) ((365 - ((diffrent / (24 * 3600 * 1000)) % 365)) + ((diffrent / (24 * 3600 * 1000)) / (365 * 4))); // Количество дней до следующего дня рождения от текущей даты (учитывая весокосные годы)
-
-        return days;
-    }     */
-    
-    
 
 
 

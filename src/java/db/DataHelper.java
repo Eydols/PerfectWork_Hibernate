@@ -7,6 +7,8 @@ import enums.SearchType;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 public class DataHelper {
@@ -27,27 +29,39 @@ public class DataHelper {
     }
 
     public List<Man> getAllMan() {
-         sessionFactory.getCurrentSession().beginTransaction();
+        sessionFactory.getCurrentSession().beginTransaction();
         List<Man> man = getSession().createCriteria(Man.class).list();
         sessionFactory.getCurrentSession().getTransaction().commit();
         return man;
     }
-    
-        public List<LeftMenu> getLeftMenu() {
-         sessionFactory.getCurrentSession().beginTransaction();
+
+    public List<LeftMenu> getLeftMenu() {
+        sessionFactory.getCurrentSession().beginTransaction();
         List<LeftMenu> leftMenu = getSession().createCriteria(LeftMenu.class).list();
         sessionFactory.getCurrentSession().getTransaction().commit();
         return leftMenu;
-        }
-    
-        public List<Man> getManBySurname(String manSurname) {
-        return getSession().createCriteria(Man.class).add(Restrictions.ilike("surname", manSurname)).list();
+    }
+
+    public List<Man> getManBySurname(String manSurname) {
+        sessionFactory.getCurrentSession().beginTransaction();
+        List<Man> man = getSession().createCriteria(Man.class).add(Restrictions.ilike("surname", manSurname, MatchMode.ANYWHERE)).list();
+        sessionFactory.getCurrentSession().getTransaction().commit();
+        return man;
     }
 
     public List<Man> getManByString(String currentSearchString, SearchType selectedSearchType) {
-        return getSession().createCriteria(Man.class).add(Restrictions.and(Restrictions.ilike("surname", currentSearchString), Restrictions.eq("firm", selectedSearchType.getFirmName()))).list();
+        sessionFactory.getCurrentSession().beginTransaction();
+        List<Man> man = getSession().createCriteria(Man.class).add(Restrictions.and(Restrictions.ilike("surname", currentSearchString, MatchMode.ANYWHERE), Restrictions.eq("sprFirmByFirmId.id", selectedSearchType.getId()))).list();
+        sessionFactory.getCurrentSession().getTransaction().commit();
+        return man;
     }
-    
-    
+
+    public String getContent(String table, Integer id) throws ClassNotFoundException {
+        sessionFactory.getCurrentSession().beginTransaction();
+        Class classTable = Class.forName(table);
+        String content = (String) getSession().createCriteria(classTable).setProjection(Projections.property("content")).add(Restrictions.eq("manId", id)).uniqueResult();
+        sessionFactory.getCurrentSession().getTransaction().commit();
+        return content;
+    }
 
 }

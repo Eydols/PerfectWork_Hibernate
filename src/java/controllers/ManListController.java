@@ -49,6 +49,10 @@ public class ManListController implements Serializable {
         currentManList = DataHelper.getInstance().getAllMan();
     }
 
+    public void fillManBySurname() {
+        currentManList = DataHelper.getInstance().getManBySurname(currentSearchString);
+    }
+
     public String fillManBySearch() {
 
         if (currentSearchString.trim().length() == 0) {
@@ -65,7 +69,7 @@ public class ManListController implements Serializable {
     }
 
     public void updateMan() { // обновляет измененные данные сотудников после редактирования
-   cancelEditMode();
+        cancelEditMode();
     }
 //</editor-fold>
 
@@ -112,7 +116,7 @@ public class ManListController implements Serializable {
     public void cancelEditMode() { // выполнятся при нажатии кнопки Отмена в режиме редактирования на странице man.xhtml
         editModeView = false;
         for (Man man : currentManList) {
-           // man.setEdit(false);
+            // man.setEdit(false);
         }
     }
 
