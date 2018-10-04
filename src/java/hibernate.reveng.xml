@@ -41,16 +41,16 @@ Contributor(s):
 -->
 <hibernate-reverse-engineering>
   <schema-selection match-catalog="handbook"/>
-  <table-filter match-name="svid_povqual"/>
   <table-filter match-name="qualif_attestat"/>
-  <table-filter match-name="spr_sex"/>
-  <table-filter match-name="man"/>
-  <table-filter match-name="spr_firm"/>
-  <table-filter match-name="diplom_vuz"/>
-  <table-filter match-name="diplom_ssuz"/>
   <table-filter match-name="left_menu"/>
-  <table-filter match-name="spr_doljnost"/>
-  <table-filter match-name="ud_poot"/>
   <table-filter match-name="passport"/>
   <table-filter match-name="trud_book"/>
+  <table-filter match-name="spr_firm"/>
+  <table-filter match-name="spr_doljnost"/>
+  <table-filter match-name="svid_povqual"/>
+  <table-filter match-name="diplom_ssuz"/>
+  <table-filter match-name="man"/>
+  <table-filter match-name="diplom_vuz"/>
+  <table-filter match-name="spr_sex"/>
+  <table-filter match-name="ud_poot"/>
 </hibernate-reverse-engineering>

@@ -1,5 +1,5 @@
 package entity;
-// Generated 02.10.2018 21:28:39 by Hibernate Tools 4.3.1
+// Generated 04.10.2018 19:07:38 by Hibernate Tools 4.3.1
 
 
 
@@ -10,7 +10,7 @@ public class DiplomVuz  implements java.io.Serializable {
 
 
      private String image;
-     private Man man;
+     private Integer manId;
      private String content;
 
     public DiplomVuz() {
@@ -20,9 +20,9 @@ public class DiplomVuz  implements java.io.Serializable {
     public DiplomVuz(String image) {
         this.image = image;
     }
-    public DiplomVuz(String image, Man man, String content) {
+    public DiplomVuz(String image, Integer manId, String content) {
        this.image = image;
-       this.man = man;
+       this.manId = manId;
        this.content = content;
     }
    
@@ -33,12 +33,12 @@ public class DiplomVuz  implements java.io.Serializable {
     public void setImage(String image) {
         this.image = image;
     }
-    public Man getMan() {
-        return this.man;
+    public Integer getManId() {
+        return this.manId;
     }
     
-    public void setMan(Man man) {
-        this.man = man;
+    public void setManId(Integer manId) {
+        this.manId = manId;
     }
     public String getContent() {
         return this.content;

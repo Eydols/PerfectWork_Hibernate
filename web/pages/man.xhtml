@@ -11,14 +11,15 @@
 
     <h:body>
         <ui:composition template="/templates/perfect_template.xhtml">
+            
+            <ui:define name="man_count">
+                <h:outputText value="#{msg.man_count} #{manListController.pager.totalManCount}" id="manCount"></h:outputText>
+            </ui:define>
 
             <ui:define name="content" >
 
-                <p><strong>#{msg.man_count} #{manListController.totalManCount} </strong></p>
-
-                
                 <h:form id="manForm">
-                    
+
                     <h:panelGroup id="admin_tools" rendered="#{request.isUserInRole('ADMIN')}"> <!-- панель администратора (редактирование информации о сотрудниках и добавление новых сотрудников) -->
 
                         <h:commandLink rendered="#{!manListController.editModeView}">  <!-- ссылка Добавить сотрудника -->
@@ -38,12 +39,12 @@
                             <f:ajax onevent="showProgress" execute="@form" render="@form"/>
                         </h:commandButton> 
 
-                        <h:commandButton immediate="true" action="#{manListController.cancelEdit}" rendered="#{manListController.editModeView}" 
+                        <h:commandButton immediate="true" action="#{manListController.cancelEditMode()}" rendered="#{manListController.editModeView}" 
                                          value="#{msg.cancel}"> <!-- кнопка Отмена -->
                             <f:ajax onevent="showProgress" execute="@form" render="@form"/>
                         </h:commandButton> 
                     </h:panelGroup>
-                    
+
                     <h:dataTable id="manList" value="#{manListController.currentManList}" var="m" cellspacing="10px" columnClasses="col1, col2, col3">
 
                         <h:column> <!-- колонка с фотографией сотрудника -->
@@ -83,21 +84,21 @@
                                 </p>
                             </h:panelGroup>
 
-                         <!--   <p>
-                                <strong>ДОЛЖНОСТЬ:</strong> {m.doljnostId} 
+                            <p>
+                                <strong>ДОЛЖНОСТЬ:</strong> #{m.sprDoljnostByDoljnostId.doljnost} 
                             </p>
 
                             <p>
-                                <strong>ФИРМА:</strong> {m.firmId}
+                                <strong>ФИРМА:</strong> #{m.sprFirmByFirmId.firm}
                             </p>
 
                             <p>
-                                <strong>ДОЛЖНОСТЬ2:</strong> {m.doljnost2Id} 
+                                <strong>ДОЛЖНОСТЬ2:</strong> #{m.sprDoljnostByDoljnost2Id.doljnost} 
                             </p>                                            
 
                             <p>
-                                <strong>ФИРМА2:</strong> {m.firm2Id}
-                            </p> -->
+                                <strong>ФИРМА2:</strong> #{m.sprFirmByFirm2Id.firm}
+                            </p>
 
                         </h:column>
 
@@ -137,7 +138,7 @@
                         </h:column> -->
 
                     </h:dataTable>
-                    
+
                     <h:selectOneMenu styleClass="man_on_page_dropdown" value="#{manListController.manCountOnPage}" valueChangeListener="#{manListController.changeManCountOnPage}">
                         <f:selectItem itemValue="5"/>
                         <f:selectItem itemValue="10"/>
@@ -145,7 +146,7 @@
                         <f:selectItem itemValue="30"/>
                         <f:ajax event="change" execute="@form" onevent="showProgress" render=":manForm :manForm:manList :pager1 :pager2"/>
                     </h:selectOneMenu>
-                    
+
                 </h:form>
             </ui:define>
 

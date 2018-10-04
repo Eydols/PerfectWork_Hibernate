@@ -1,5 +1,5 @@
 package entity;
-// Generated 02.10.2018 21:28:39 by Hibernate Tools 4.3.1
+// Generated 04.10.2018 19:07:38 by Hibernate Tools 4.3.1
 
 import javax.faces.context.FacesContext;
 
@@ -30,6 +30,16 @@ public class LeftMenu  implements java.io.Serializable {
        this.page = page;
     }
    
+    public String getName() {
+        
+        if (FacesContext.getCurrentInstance().getViewRoot().getLocale().toString().equals("en")) {
+            return nameEn;
+        } else {
+            return nameRu;
+        }
+
+    }
+    
     public Integer getId() {
         return this.id;
     }
@@ -57,15 +67,6 @@ public class LeftMenu  implements java.io.Serializable {
     
     public void setPage(String page) {
         this.page = page;
-    }
-    
-    public String getName() {
-        
-        if (FacesContext.getCurrentInstance().getViewRoot().getLocale().toString().equals("en")) {
-            return nameEn;
-        } else {
-            return nameRu;
-        }
     }
 
 

@@ -1,5 +1,5 @@
 package entity;
-// Generated 02.10.2018 21:28:39 by Hibernate Tools 4.3.1
+// Generated 04.10.2018 19:07:38 by Hibernate Tools 4.3.1
 
 
 
@@ -10,7 +10,7 @@ public class UdPoot  implements java.io.Serializable {
 
 
      private String image;
-     private Man man;
+     private Integer manId;
      private String dateOkonch;
      private String content;
 
@@ -21,9 +21,9 @@ public class UdPoot  implements java.io.Serializable {
     public UdPoot(String image) {
         this.image = image;
     }
-    public UdPoot(String image, Man man, String dateOkonch, String content) {
+    public UdPoot(String image, Integer manId, String dateOkonch, String content) {
        this.image = image;
-       this.man = man;
+       this.manId = manId;
        this.dateOkonch = dateOkonch;
        this.content = content;
     }
@@ -35,12 +35,12 @@ public class UdPoot  implements java.io.Serializable {
     public void setImage(String image) {
         this.image = image;
     }
-    public Man getMan() {
-        return this.man;
+    public Integer getManId() {
+        return this.manId;
     }
     
-    public void setMan(Man man) {
-        this.man = man;
+    public void setManId(Integer manId) {
+        this.manId = manId;
     }
     public String getDateOkonch() {
         return this.dateOkonch;

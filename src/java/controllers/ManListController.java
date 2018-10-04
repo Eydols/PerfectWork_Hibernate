@@ -55,11 +55,6 @@ public class ManListController implements Serializable {
 
     public String fillManBySearch() {
 
-        if (currentSearchString.trim().length() == 0) {
-            fillManAll();
-            return "man";
-        }
-
         if (selectedSearchType == SearchType.KSR || selectedSearchType == SearchType.PERFECT) { // потом можно попробовать использовать оператор switch
             currentManList = DataHelper.getInstance().getManByString(currentSearchString, selectedSearchType);
         } else {

@@ -1,5 +1,5 @@
 package entity;
-// Generated 02.10.2018 21:28:39 by Hibernate Tools 4.3.1
+// Generated 04.10.2018 19:07:38 by Hibernate Tools 4.3.1
 
 
 
@@ -9,39 +9,38 @@ package entity;
 public class Passport  implements java.io.Serializable {
 
 
-     private int manId;
-     private Man man;
-     private String dateOkonch;
      private String image;
+     private Integer manId;
+     private String dateOkonch;
      private String content;
 
     public Passport() {
     }
 
 	
-    public Passport(Man man) {
-        this.man = man;
+    public Passport(String image) {
+        this.image = image;
     }
-    public Passport(Man man, String dateOkonch, String image, String content) {
-       this.man = man;
-       this.dateOkonch = dateOkonch;
+    public Passport(String image, Integer manId, String dateOkonch, String content) {
        this.image = image;
+       this.manId = manId;
+       this.dateOkonch = dateOkonch;
        this.content = content;
     }
    
-    public int getManId() {
+    public String getImage() {
+        return this.image;
+    }
+    
+    public void setImage(String image) {
+        this.image = image;
+    }
+    public Integer getManId() {
         return this.manId;
     }
     
-    public void setManId(int manId) {
+    public void setManId(Integer manId) {
         this.manId = manId;
-    }
-    public Man getMan() {
-        return this.man;
-    }
-    
-    public void setMan(Man man) {
-        this.man = man;
     }
     public String getDateOkonch() {
         return this.dateOkonch;
@@ -49,13 +48,6 @@ public class Passport  implements java.io.Serializable {
     
     public void setDateOkonch(String dateOkonch) {
         this.dateOkonch = dateOkonch;
-    }
-    public String getImage() {
-        return this.image;
-    }
-    
-    public void setImage(String image) {
-        this.image = image;
     }
     public String getContent() {
         return this.content;

@@ -1,5 +1,5 @@
 package entity;
-// Generated 02.10.2018 21:28:39 by Hibernate Tools 4.3.1
+// Generated 04.10.2018 19:07:38 by Hibernate Tools 4.3.1
 
 
 
@@ -9,44 +9,36 @@ package entity;
 public class TrudBook  implements java.io.Serializable {
 
 
-     private int manId;
-     private Man man;
      private String image;
+     private Integer manId;
      private String content;
 
     public TrudBook() {
     }
 
 	
-    public TrudBook(Man man) {
-        this.man = man;
+    public TrudBook(String image) {
+        this.image = image;
     }
-    public TrudBook(Man man, String image, String content) {
-       this.man = man;
+    public TrudBook(String image, Integer manId, String content) {
        this.image = image;
+       this.manId = manId;
        this.content = content;
     }
    
-    public int getManId() {
-        return this.manId;
-    }
-    
-    public void setManId(int manId) {
-        this.manId = manId;
-    }
-    public Man getMan() {
-        return this.man;
-    }
-    
-    public void setMan(Man man) {
-        this.man = man;
-    }
     public String getImage() {
         return this.image;
     }
     
     public void setImage(String image) {
         this.image = image;
+    }
+    public Integer getManId() {
+        return this.manId;
+    }
+    
+    public void setManId(Integer manId) {
+        this.manId = manId;
     }
     public String getContent() {
         return this.content;

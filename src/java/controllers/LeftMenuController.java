@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 
-@ManagedBean(eager = true)
+@ManagedBean()
 @ApplicationScoped
 public class LeftMenuController implements Serializable {
     
