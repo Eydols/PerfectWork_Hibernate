@@ -3,12 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/EYDOL/Documents/NetBeansProjects/PerfectWork_Hibernate/src/java/controllers/LeftMenuController.java</file>
+            <file>file:/C:/Users/EYDOL/Documents/NetBeansProjects/PerfectWork_Hibernate/src/java/beans/Pager.java</file>
+            <file>file:/C:/Users/EYDOL/Documents/NetBeansProjects/PerfectWork_Hibernate/web/templates/perfect_template.xhtml</file>
             <file>file:/C:/Users/EYDOL/Documents/NetBeansProjects/PerfectWork_Hibernate/web/templates/header.xhtml</file>
             <file>file:/C:/Users/EYDOL/Documents/NetBeansProjects/PerfectWork_Hibernate/web/pages/man.xhtml</file>
             <file>file:/C:/Users/EYDOL/Documents/NetBeansProjects/PerfectWork_Hibernate/src/java/controllers/ManListController.java</file>
             <file>file:/C:/Users/EYDOL/Documents/NetBeansProjects/PerfectWork_Hibernate/src/java/db/DataHelper.java</file>
-            <file>file:/C:/Users/EYDOL/Documents/NetBeansProjects/PerfectWork_Hibernate/src/java/filters/HibernateSession.java</file>
+            <file>file:/C:/Users/EYDOL/Documents/NetBeansProjects/PerfectWork_Hibernate/web/templates/paginator.xhtml</file>
         </group>
     </open-files>
 </project-private>

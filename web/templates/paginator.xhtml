@@ -11,16 +11,28 @@
     <h:body>
         <ui:composition>
 
-                    <h:form rendered="#{manListController.totalManCount>manListController.manCountOnPage}">
-                        #{msg.pager}
-                        <ui:repeat value="#{manListController.pageNumbersList}" var="pageNumber">
-                            <h:commandLink value="#{pageNumber}" styleClass="#{pageNamber == manListController.selectedPageNumber ? 'selected_page' : ''}">
-                                <f:param name="page_number" value="#{pageNumber}" />
-                                <f:ajax onevent="showProgress" event="click" render=":manList :pages1 pages2" listener="#{manListController.selectPage()}" />
-                            </h:commandLink>
-                        </ui:repeat>
-                    </h:form>
+            <h:form rendered="#{manListController.pager.totalManCount>0}">
 
+                <h:selectOneMenu styleClass="man_on_page_dropdown" value="#{manListController.pager.manCountOnPage}" valueChangeListener="#{manListController.changeManCountOnPage}">
+                    <f:selectItem itemValue="5"/>
+                    <f:selectItem itemValue="10"/>
+                    <f:selectItem itemValue="20"/>
+                    <f:selectItem itemValue="30"/>
+                    <f:ajax event="change" execute="@form" onevent="showProgress" render=":manForm :manForm:manList :pager1 :pager2"/>
+                </h:selectOneMenu>
+
+                #{msg.pager}
+                <ui:repeat value="#{manListController.pager.pageNumbers}" var="pageNumber">
+                    
+                    <h:outputText value="#{pageNumber}" rendered="#{pageNamber == manListController.pager.selectedPageNumber}" styleClass="selected_page" />
+                    
+                    <h:commandLink value="#{pageNumber}" rendered="#{pageNamber != manListController.pager.selectedPageNumber}" styleClass="page_number">
+                        <f:param name="page_number" value="#{pageNumber}" />
+                        <f:ajax onevent="showProgress" event="click" render=":manList :pages1 pages2" listener="#{manListController.selectPage()}"/>
+                    </h:commandLink>
+                </ui:repeat>
+                
+            </h:form>
         </ui:composition>
     </h:body>
 </html>
