@@ -11,7 +11,7 @@
 
     <h:body>
         <ui:composition template="/templates/perfect_template.xhtml">
-            
+
             <ui:define name="man_count">
                 <h:outputText value="#{msg.man_count} #{manListController.pager.totalManCount}"></h:outputText>
             </ui:define>
@@ -87,23 +87,29 @@
                             <p>
                                 <strong>ДОЛЖНОСТЬ:</strong>  
                                 <h:outputText value="#{m.sprDoljnostByDoljnostId.doljnost}" rendered="#{!manListController.editModeView}"/>
-                                
+
                                 <h:selectOneMenu rendered="#{manListController.editModeView and m.edit}" value="#{m.sprDoljnostByDoljnostId}" converter="#{doljnostController}">
-                                    <f:selectItems value="${doljnostController.selectItems}"/>
-                                </h:selectOneMenu>
+                                    <f:selectItems value="#{doljnostController.selectItems}"/>
+                                </h:selectOneMenu>  
                             </p>
 
                             <p>
                                 <strong>ФИРМА:</strong> #{m.sprFirmByFirmId.firm}
                             </p>
 
-                            <p>
-                                <strong>ДОЛЖНОСТЬ2:</strong> #{m.sprDoljnostByDoljnost2Id.doljnost} 
-                            </p>                                            
+                            <h:panelGroup rendered="#{!manListController.editModeView and (m.sprFirmByFirmId.firm != m.sprFirmByFirm2Id.firm)}">
+                                <p>
+                                    <strong>ДОЛЖНОСТЬ2:</strong>  
+                                    <h:outputText value="#{m.sprDoljnostByDoljnost2Id.doljnost}"/> 
+                                </p>
+                            </h:panelGroup>
 
-                            <p>
-                                <strong>ФИРМА2:</strong> #{m.sprFirmByFirm2Id.firm}
-                            </p>
+
+                            <h:panelGroup rendered="#{!manListController.editModeView and (m.sprFirmByFirmId.firm != m.sprFirmByFirm2Id.firm)}">
+                                <p>
+                                    <strong>ФИРМА2:</strong> #{m.sprFirmByFirm2Id.firm}
+                                </p>
+                            </h:panelGroup>
 
                         </h:column>
 
@@ -136,11 +142,11 @@
                         </h:column>
                         <!-- обложки документов (окончание) -->
 
-                     <!--   <h:column rendered="?{request.isUserInRole('ADMIN')}">
-                            <h:selectBooleanCheckbox value="?{m.edit}" rendered="?{!manListController.editModeView}">
+                        <h:column rendered="#{request.isUserInRole('ADMIN')}">
+                            <h:selectBooleanCheckbox value="#{m.edit}" rendered="#{!manListController.editModeView}">
                                 <f:ajax event="change"/>
                             </h:selectBooleanCheckbox>
-                        </h:column> -->
+                        </h:column> 
 
                     </h:dataTable>
 

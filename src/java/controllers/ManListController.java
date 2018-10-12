@@ -51,6 +51,7 @@ public class ManListController implements Serializable {
     }
 
     public void updateMan() { // обновляет измененные данные сотудников после редактирования
+        DataHelper.getInstance().update();
         cancelEditMode();
     }
 //</editor-fold>
@@ -80,14 +81,14 @@ public class ManListController implements Serializable {
         cancelEditMode();
         pager.setManCountOnPage(Integer.valueOf(e.getNewValue().toString()).intValue());
         pager.setSelectedPageNumber(1);
-        DataHelper.getInstance().runCurrentCriteria();
+        DataHelper.getInstance().runManListCriteria();
     }
     
     public void selectPage() { // отрабатывает после нажатия на к-л страницу в постраничности
         cancelEditMode();
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         pager.setSelectedPageNumber(Integer.valueOf(params.get("page_number")));
-        DataHelper.getInstance().runCurrentCriteria();
+        DataHelper.getInstance().runManListCriteria();
     }
     
     //<editor-fold defaultstate="collapsed" desc="геттеры/сеттеры">

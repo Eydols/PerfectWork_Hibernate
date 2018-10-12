@@ -11,7 +11,7 @@ import java.util.Set;
 public class SprDoljnost  implements java.io.Serializable {
 
 
-     private int id;
+     private long id;
      private String doljnost;
      private Set mansForDoljnostId = new HashSet(0);
      private Set mansForDoljnost2Id = new HashSet(0);
@@ -20,22 +20,22 @@ public class SprDoljnost  implements java.io.Serializable {
     }
 
 	
-    public SprDoljnost(int id, String doljnost) {
+    public SprDoljnost(long id, String doljnost) {
         this.id = id;
         this.doljnost = doljnost;
     }
-    public SprDoljnost(int id, String doljnost, Set mansForDoljnostId, Set mansForDoljnost2Id) {
+    public SprDoljnost(long id, String doljnost, Set mansForDoljnostId, Set mansForDoljnost2Id) {
        this.id = id;
        this.doljnost = doljnost;
        this.mansForDoljnostId = mansForDoljnostId;
        this.mansForDoljnost2Id = mansForDoljnost2Id;
     }
    
-    public int getId() {
+    public long getId() {
         return this.id;
     }
     
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
     public String getDoljnost() {
@@ -59,10 +59,11 @@ public class SprDoljnost  implements java.io.Serializable {
     public void setMansForDoljnost2Id(Set mansForDoljnost2Id) {
         this.mansForDoljnost2Id = mansForDoljnost2Id;
     }
-
-
-
-
+    
+    @Override
+    public boolean equals(Object obj) {
+    return Long.valueOf(id) == Long.valueOf(((SprDoljnost) obj).getId());
+    }
 }
 
 
