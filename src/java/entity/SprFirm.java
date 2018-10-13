@@ -11,7 +11,7 @@ import java.util.Set;
 public class SprFirm  implements java.io.Serializable {
 
 
-     private int id;
+     private long id;
      private String firm;
      private Set mansForFirmId = new HashSet(0);
      private Set mansForFirm2Id = new HashSet(0);
@@ -20,21 +20,21 @@ public class SprFirm  implements java.io.Serializable {
     }
 
 	
-    public SprFirm(int id) {
+    public SprFirm(long id) {
         this.id = id;
     }
-    public SprFirm(int id, String firm, Set mansForFirmId, Set mansForFirm2Id) {
+    public SprFirm(long id, String firm, Set mansForFirmId, Set mansForFirm2Id) {
        this.id = id;
        this.firm = firm;
        this.mansForFirmId = mansForFirmId;
        this.mansForFirm2Id = mansForFirm2Id;
     }
    
-    public int getId() {
+    public long getId() {
         return this.id;
     }
     
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
     public String getFirm() {
@@ -58,10 +58,24 @@ public class SprFirm  implements java.io.Serializable {
     public void setMansForFirm2Id(Set mansForFirm2Id) {
         this.mansForFirm2Id = mansForFirm2Id;
     }
+    
+    @Override
+    public boolean equals(Object obj) {
+    return Long.valueOf(id) == Long.valueOf(((SprFirm) obj).getId());
+    }
 
+    @Override
+    public String toString() {
+        return firm;
+    }
 
-
-
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 29 * hash + (int) (this.id ^ (this.id >>> 32));
+        return hash;
+    }
+   
 }
 
 

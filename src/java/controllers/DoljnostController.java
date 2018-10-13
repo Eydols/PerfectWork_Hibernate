@@ -1,9 +1,11 @@
 package controllers;
 
+import comparators.ListComparator;
 import db.DataHelper;
 import entity.SprDoljnost;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,10 +23,12 @@ public class DoljnostController implements Serializable, Converter {
     private List<SelectItem> selectItems = new ArrayList<SelectItem>();
     private Map<Long, SprDoljnost> map;
     private List<SprDoljnost> list;
+    
 
     public DoljnostController() {
         map = new HashMap <Long, SprDoljnost>();
         list = DataHelper.getInstance().getAllDoljnost();
+        Collections.sort(list, ListComparator.getInstance());
 
         for (SprDoljnost doljnost : list) {
             map.put(doljnost.getId(), doljnost);

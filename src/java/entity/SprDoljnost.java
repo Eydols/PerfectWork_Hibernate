@@ -64,6 +64,22 @@ public class SprDoljnost  implements java.io.Serializable {
     public boolean equals(Object obj) {
     return Long.valueOf(id) == Long.valueOf(((SprDoljnost) obj).getId());
     }
+
+    @Override
+    public String toString() {
+        return doljnost;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 79 * hash + (int) (this.id ^ (this.id >>> 32));
+        return hash;
+    }
+    
+    
+    
+    
 }
 
 

@@ -6,15 +6,15 @@ public enum SearchType {
     PERFECT(1,"Перфектподряд"),
     KSR(2,"КлассикСтройРемонт");
 
-    private int id;
+    private long id;
     private String firm_name;
 
-    SearchType(int id, String f) {
+    SearchType(long id, String f) {
         this.id = id;
         firm_name = f;
     }
 
-     public int getId() {
+     public long getId() {
         return id;
     }
      

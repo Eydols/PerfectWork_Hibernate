@@ -82,7 +82,7 @@ public class DataHelper {
     public void getManByString(String currentSearchString, SearchType selectedSearchType, Pager pager) {
         currentPager = pager;
 
-        Criterion criterion = Restrictions.and(Restrictions.ilike("surname", currentSearchString, MatchMode.ANYWHERE), Restrictions.eq("sprFirmByFirmId.id", selectedSearchType.getId()));
+        Criterion criterion = Restrictions.or(Restrictions.and(Restrictions.ilike("surname", currentSearchString, MatchMode.ANYWHERE), Restrictions.eq("sprFirmByFirmId.id", selectedSearchType.getId())), Restrictions.and(Restrictions.ilike("surname", currentSearchString, MatchMode.ANYWHERE), Restrictions.eq("sprFirmByFirm2Id.id", selectedSearchType.getId())));
 
         createManCountCriteria(criterion);
         runCountCriteria();

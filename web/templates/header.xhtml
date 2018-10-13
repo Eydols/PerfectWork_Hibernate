@@ -36,7 +36,7 @@
                         <f:ajax onevent="showProgress" execute="@form" event="click" render=":manForm:manList @form :pages1 :pages2 :manCount" listener="#{manListController.fillManBySearch()}" /> 
                     </h:commandButton>
                     <h:selectOneMenu value="#{manListController.selectedSearchType}" valueChangeListener="#{manListController.searchTypeChanged}" > <!-- выбранное пользователем условие поиска сохраняется в переменную searchType-->
-                        <f:selectItems value="${searchTypeController.searchList}"/> <!-- заполняем выпадающий список с помощью коллекции searchList, которая заполняется один раз при создании объекта SearchController-->
+                        <f:selectItems value="#{searchTypeController.searchList}"/> <!-- заполняем выпадающий список с помощью коллекции searchList, которая заполняется один раз при создании объекта SearchController-->
                         <f:ajax event="change"/>
                     </h:selectOneMenu>
                 </h:form>
