@@ -21,13 +21,14 @@ import org.hibernate.criterion.Restrictions;
 
 public class DataHelper {
 
+    private Pager pager = Pager.getInstance();
     private SessionFactory sessionFactory = null;
     private static DataHelper dataHelper;
     private DetachedCriteria manCountCriteria;
     private DetachedCriteria manListCriteria;
-    private Pager currentPager;
 
     private DataHelper() {
+        prepareCriterias();
         sessionFactory = HibernateUtil.getSessionFactory();
     }
 
@@ -58,37 +59,30 @@ public class DataHelper {
     }
 
     public void getAllMan(Pager pager) {
-        currentPager = pager;
-
-        createManCountCriteria();
-        runCountCriteria();
-
-        createManListCriteria();
-        runManListCriteria();
+        prepareCriterias();
+        populateList();
     }
 
     public void getManBySurname(String manSurname, Pager pager) {
-        currentPager = pager;
 
         Criterion criterion = Restrictions.ilike("surname", manSurname, MatchMode.ANYWHERE);
 
-        createManCountCriteria(criterion);
-        runCountCriteria();
-
-        createManListCriteria(criterion);
-        runManListCriteria();
+        prepareCriterias(criterion);
+        populateList();
     }
 
     public void getManByString(String currentSearchString, SearchType selectedSearchType, Pager pager) {
-        currentPager = pager;
 
-        Criterion criterion = Restrictions.or(Restrictions.and(Restrictions.ilike("surname", currentSearchString, MatchMode.ANYWHERE), Restrictions.eq("sprFirmByFirmId.id", selectedSearchType.getId())), Restrictions.and(Restrictions.ilike("surname", currentSearchString, MatchMode.ANYWHERE), Restrictions.eq("sprFirmByFirm2Id.id", selectedSearchType.getId())));
-
-        createManCountCriteria(criterion);
-        runCountCriteria();
-
-        createManListCriteria(criterion);
-        runManListCriteria();
+        Criterion criterion = Restrictions.or(
+                Restrictions.and(
+                        Restrictions.ilike("surname", currentSearchString, MatchMode.ANYWHERE),
+                        Restrictions.eq("sprFirmByFirmId.id", selectedSearchType.getId())),
+                Restrictions.and(
+                        Restrictions.ilike("surname", currentSearchString, MatchMode.ANYWHERE),
+                        Restrictions.eq("sprFirmByFirm2Id.id", selectedSearchType.getId()))
+        );
+        prepareCriterias(criterion);
+        populateList();
 
         // до этого было так
         //Criteria criteria = getSession().createCriteria(Man.class, "man").createAlias("man.sprFirmByFirmId", "sprFirmByFirmId");
@@ -111,24 +105,23 @@ public class DataHelper {
     }
 
     private void runCountCriteria() {
-        //sessionFactory.getCurrentSession().beginTransaction();
         Criteria criteria = manCountCriteria.getExecutableCriteria(getSession());
         Long total = (Long) criteria.setProjection(Projections.rowCount()).uniqueResult();
-        currentPager.setTotalManCount(total);
-        //sessionFactory.getCurrentSession().getTransaction().commit();
+        pager.setTotalManCount(total);
     }
 
     public void runManListCriteria() {
         Criteria criteria = manListCriteria.addOrder(Order.asc("surname")).getExecutableCriteria(getSession());
-        List<Man> list = criteria.setFirstResult(currentPager.getFrom()).setMaxResults(currentPager.getTo()).list();
-        currentPager.setList(list);
+        criteria.setFirstResult(pager.getFrom()).setMaxResults(pager.getTo()).list();
+        List<Man> list = criteria.list();
+        pager.setList(list);
     }
 
     public void update() {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.getTransaction();
         transaction.begin();
-        for (Object object : currentPager.getList()) {
+        for (Object object : pager.getList()) {
             Man man = (Man) object;
             if (man.getEdit()) {
                 session.update(man);
@@ -138,37 +131,35 @@ public class DataHelper {
         session.flush();
         session.close();
     }
-    
-    private void createManCountCriteria(Criterion criterion) {
-    manCountCriteria = DetachedCriteria.forClass(Man.class, "m");
-    manCountCriteria.add(criterion);
+
+    private void prepareCriterias(Criterion criterion) {
+        manListCriteria = DetachedCriteria.forClass(Man.class, "m");
+        createAliases(manListCriteria);
+        manListCriteria.add(criterion);
+
+        manCountCriteria = DetachedCriteria.forClass(Man.class, "m");
+        createAliases(manCountCriteria);
+        manCountCriteria.add(criterion);
     }
-    
-    private void createManCountCriteria() {
-    manCountCriteria = DetachedCriteria.forClass(Man.class, "m");
+
+    private void prepareCriterias() {
+        manListCriteria = DetachedCriteria.forClass(Man.class, "m");
+        createAliases(manListCriteria);
+
+        manCountCriteria = DetachedCriteria.forClass(Man.class, "m");
+        createAliases(manCountCriteria);
     }
-    
-    private void createManListCriteria(Criterion criterion) {
-    manListCriteria = DetachedCriteria.forClass(Man.class, "m");
-    manListCriteria.add(criterion);
-    createAliases();
+
+    private void createAliases(DetachedCriteria criteria) {
+        criteria.createAlias("m.sprFirmByFirmId", "sprFirmByFirmId");
+        criteria.createAlias("m.sprFirmByFirm2Id", "sprFirmByFirm2Id");
+        criteria.createAlias("m.sprDoljnostByDoljnostId", "sprDoljnostByDoljnostId");
+        criteria.createAlias("m.sprDoljnostByDoljnost2Id", "sprDoljnostByDoljnost2Id");
     }
-    
-    private void createManListCriteria() {
-    manListCriteria = DetachedCriteria.forClass(Man.class, "m");
-    createAliases();
-    }
-    
-    private void createAliases() {
-    manListCriteria.createAlias("m.sprFirmByFirmId", "sprFirmByFirmId");
-    manListCriteria.createAlias("m.sprFirmByFirm2Id", "sprFirmByFirm2Id");
-    manListCriteria.createAlias("m.sprDoljnostByDoljnostId", "sprDoljnostByDoljnostId");
-    manListCriteria.createAlias("m.sprDoljnostByDoljnost2Id", "sprDoljnostByDoljnost2Id");
-    }
-    
-    public void refreshList() {
-    runCountCriteria();
-    runManListCriteria();
+
+    public void populateList() {
+        runCountCriteria();
+        runManListCriteria();
     }
 
 }

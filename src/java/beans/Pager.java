@@ -1,41 +1,27 @@
 package beans;
 
+import entity.Man;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Pager<T> {
+public class Pager {
 
-    private int selectedPageNumber = 1; // выбранный номер страницы в постраничной навигации
-    private int manCountOnPage = 5; // количество сотрудников, отображаемое на одной странице
+    public static Pager pager;
+
     private long totalManCount; // общее количество найденных сотрудников
-    private List<T> list;
+    private Man selectedMan;
+    private List<Man> list;
+    private int from;
+    private int to;
 
     public Pager() {
-    
-    }
-    
-    public int getFrom() {
-        return selectedPageNumber * manCountOnPage - manCountOnPage; // с какого по счету сотрудника показывать из полученной коллекции
-    }
-    
-    public int getTo() {
-    return manCountOnPage;
-    }
-    
-    public List <T> getList() {
-    return list;
-    }
-    
-    public void setList(List<T> list) {
-    this.list = list;
     }
 
-    public int getSelectedPageNumber() {
-        return selectedPageNumber;
-    }
-
-    public void setSelectedPageNumber(int selectedPageNumber) {
-        this.selectedPageNumber = selectedPageNumber;
+    public static Pager getInstance() {
+        if (pager == null) {
+            pager = new Pager();
+        }
+        return pager;
     }
 
     public long getTotalManCount() {
@@ -46,34 +32,38 @@ public class Pager<T> {
         this.totalManCount = totalManCount;
     }
 
-    public int getManCountOnPage() {
-        return manCountOnPage;
+    public Man getSelectedMan() {
+        return selectedMan;
     }
 
-    public void setManCountOnPage(int manCountOnPage) {
-        this.manCountOnPage = manCountOnPage;
-    } 
-    
-    private List<Integer> pageNumbers = new ArrayList<Integer>(); //количество страниц для постраничности
-    
-    public List<Integer> getPageNumbers() { //определяет количество страниц и создает соответствующую коллекцию целых чисел
-    int pageCount = 0; //количество страниц
-        if (totalManCount == 0) {
-            pageCount = 0;
-        } else if (totalManCount % manCountOnPage == 0) {
-            pageCount = (int) totalManCount / manCountOnPage;
-        } else {
-            pageCount = (int) totalManCount / manCountOnPage + 1;
-        }
-
-        pageNumbers.clear();
-        for (int i = 1; i <= pageCount; i++) {
-            pageNumbers.add(i);
-        }
-        return pageNumbers;
+    public void setSelectedMan(Man selectedMan) {
+        this.selectedMan = selectedMan;
     }
-    
-    
-    
+
+    public List<Man> getList() {
+        return list;
+    }
+
+    public void setList(List<Man> list) {
+        this.list = list;
+    }
+
+    public int getFrom() {
+        return from;
+    }
+
+    public void setFrom(int from) {
+        this.from = from;
+    }
+
+    public int getTo() {
+        return to;
+    }
+
+    public void setTo(int to) {
+        this.to = to;
+    }
+
+
 
 }

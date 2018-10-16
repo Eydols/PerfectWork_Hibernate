@@ -5,34 +5,30 @@ import entity.Man;
 import db.DataHelper;
 import enums.SearchType;
 import java.io.Serializable;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
+import models.ManListDataModel;
+import org.primefaces.model.LazyDataModel;
 
 @ManagedBean(eager = true)
 @SessionScoped
 public class ManListController implements Serializable {
 
+    private DataHelper dataHelper = DataHelper.getInstance();
+    private LazyDataModel<Man> manListModel;
+    
     // критерии поиска
     private String currentSearchString; // хранит поисковую строку
     private SearchType selectedSearchType = SearchType.ALL_FIRM; // хранит выбранный тип поиска, по умолчанию - все организации
-    private Pager<Man> pager = new Pager<Man>();
+    private Pager pager = Pager.getInstance();
 
     private boolean editModeView = false; // отображение режима редактирования
 
     public ManListController() {
-        fillManAll();
+        manListModel = new ManListDataModel();
     }
 
 //<editor-fold defaultstate="collapsed" desc="запросы в БД">
@@ -79,15 +75,15 @@ public class ManListController implements Serializable {
 
     public void changeManCountOnPage(ValueChangeEvent e) { //выполняется при выборе (из выпадающего списка) пользователем количества отображаемых на одной странице сотрудников 
         cancelEditMode();
-        pager.setManCountOnPage(Integer.valueOf(e.getNewValue().toString()).intValue());
-        pager.setSelectedPageNumber(1);
+        //pager.setManCountOnPage(Integer.valueOf(e.getNewValue().toString()).intValue());
+       // pager.setSelectedPageNumber(1);
         DataHelper.getInstance().runManListCriteria();
     }
     
     public void selectPage() { // отрабатывает после нажатия на к-л страницу в постраничности
         cancelEditMode();
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-        pager.setSelectedPageNumber(Integer.valueOf(params.get("page_number")));
+        //pager.setSelectedPageNumber(Integer.valueOf(params.get("page_number")));
         DataHelper.getInstance().runManListCriteria();
     }
     
@@ -116,7 +112,15 @@ public class ManListController implements Serializable {
         this.editModeView = editModeView;
     }
     
-        public Pager<Man> getPager() {
+    public LazyDataModel<Man> getManListModel() {
+        return manListModel;
+    }
+
+    public void setManListModel(LazyDataModel<Man> manListModel) {
+        this.manListModel = manListModel;
+    }
+    
+        public Pager getPager() {
         return pager;
     }
 //</editor-fold>

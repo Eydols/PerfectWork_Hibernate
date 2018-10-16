@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title> Информационный центр </title>
         <h:outputStylesheet library="css" name="style_main.css"/>
@@ -31,12 +32,12 @@
                         <h:commandLink action="#{manListController.showEdit()}" rendered="#{!manListController.editModeView}"> <!-- ссылка Редактировать -->
                             <h:graphicImage library="images" name="edit.jpg" height="20" width="20"/>
                             <h:outputText value="#{msg.edit}"></h:outputText>
-                            <f:ajax onevent="showProgress" execute="@form" render="@form :pages1 :pages2 :manCount"/>
+                            <f:ajax onevent="showProgress" execute="@form" render="@form :manCount"/>
                         </h:commandLink>
 
                         <h:commandButton action="#{manListController.updateMan()}" rendered="#{manListController.editModeView}" 
                                          value="#{msg.save}"> <!-- кнопка Сохранить -->
-                            <f:ajax onevent="showProgress" execute="@form" render="@form :pages1 :pages2 :manCount"/>
+                            <f:ajax onevent="showProgress" execute="@form" render="@form :manCount"/>
                         </h:commandButton> 
 
                         <h:commandButton immediate="true" action="#{manListController.cancelEditMode()}" rendered="#{manListController.editModeView}" 
@@ -45,13 +46,14 @@
                         </h:commandButton> 
                     </h:panelGroup>
 
-                    <h:dataTable id="manList" value="#{manListController.pager.list}" var="m" cellspacing="10px" columnClasses="col1, col2, col3">
+                    <p:dataTable lazy="true" var="m" value="#{manListController.manListModel}"  id="manList" rowIndexVar="rowIndex" styleClass="man_list" paginator="true"
+                                 rows="5" rowsPerPageTemplate="5,10,15" paginatorTemplate="{RowsPerPageDropdown} {PageLinks}" paginatorAlwaysVisible="false" emptyMessage="">
 
-                        <h:column> <!-- колонка с фотографией сотрудника -->
+                        <p:column> <!-- колонка с фотографией сотрудника -->
                             <h:graphicImage value="../resources/#{m.photo}" height="120" width="90" />
-                        </h:column>
+                        </p:column>
 
-                        <h:column> <!-- колонка с основными данными сотрудника -->
+                        <p:column> <!-- колонка с основными данными сотрудника -->
                             <p>
                                 <strong>ФАМИЛИЯ:</strong> 
                                 <h:outputText value="#{m.surname}" rendered="#{!manListController.editModeView}"/>
@@ -132,11 +134,11 @@
                                 </p>
                             </h:panelGroup>
 
-                        </h:column>
+                        </p:column>
 
 
                         <!-- обложки документов (начало) -->
-                        <h:column>
+                        <p:column>
                             <p><h:outputLink value="#{request.contextPath}/PdfContent?manId=#{m.id}&amp;table=entity.Passport" target="blank"> <!-- blank - открывать в новой вкладке -->
                                     <h:graphicImage value="../resources/images/oblojki_dok/oblojka_passport.jpg" height="60" width="45" alt="Паспорт"/>
                                 </h:outputLink>
@@ -160,16 +162,16 @@
                                 <h:outputLink value="#{request.contextPath}/PdfContent?manId=#{m.id}&amp;table=entity.UdPoot" target="blank"> <!-- blank - открывать в новой вкладке -->
                                     <h:graphicImage value="../resources/images/oblojki_dok/oblojka_ud_po_ot.jpg" height="60" width="45" alt="ОТ"/>
                                 </h:outputLink></p>
-                        </h:column>
+                        </p:column>
                         <!-- обложки документов (окончание) -->
 
-                        <h:column rendered="#{request.isUserInRole('ADMIN')}">
+                        <p:column rendered="#{request.isUserInRole('ADMIN')}">
                             <h:selectBooleanCheckbox value="#{m.edit}" rendered="#{!manListController.editModeView}">
                                 <f:ajax event="change"/>
                             </h:selectBooleanCheckbox>
-                        </h:column> 
+                        </p:column> 
 
-                    </h:dataTable>
+                    </p:dataTable>
 
                 </h:form>
             </ui:define>

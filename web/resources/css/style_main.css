@@ -52,6 +52,40 @@ img.logo {
     color: red;
 }
 
+#loading_wrapper {
+    width: 100%;
+    text-align: center;
+    position: fixed;
+    display: block;
+    z-index: 1000;    
+}
+
+#loading_wrapper p {
+    background-color: #fde88e;
+    width: 100px;
+    height: 20px;
+    margin: 0 auto;
+    font-weight: bold;
+}
+
+.ui-datatable.man_list .ui-datatable-data tr,
+.ui-datatable.man_list .ui-datatable-data-empty tr,
+.ui-datatable.man_list .ui-datatable-data td,
+.ui-datatable.man_list .ui-datatable-data-empty td {
+    border-style: none;
+    white-space: normal;
+    padding: 0;
+    background: none;    
+}
+
+.man_list table thead tr {
+    display: none;
+}
+
+.ui-datatable.man_list table {
+    border: none;
+    border-collapse: inherit;
+}
 
 
 /*Страница man.jsp*/

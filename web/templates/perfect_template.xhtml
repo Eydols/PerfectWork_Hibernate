@@ -3,79 +3,73 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-    
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
     <f:view locale="#{localeChanger.currentLocale}">
-    <h:head>
-        <title> Информационный центр </title>
-        <h:outputStylesheet library="css" name="style_main.css"/>
-        <h:outputScript library="js" name="functions.js" target="head"/>
-    </h:head>
-    <h:body>
-        <div class="container">
-            
-            <div id="loading_wrapper">
-                <p>#{msg.loading}...</p>
-            </div>
-            
-            <div class="header">
-                <ui:insert name="header">
-                    <ui:include src="/templates/header.xhtml"/>
-                </ui:insert> 
-            </div>
-            
-            <div class="man_count">
-                     <h:panelGroup id="manCount" layout="block">
-                     <ui:insert name="man_count">
-                         найдено сотрудников
-                     </ui:insert>
-                     </h:panelGroup>
-            </div>
-            
-            <div class="middle">
-                 
-                 <div class="left_menu">
-                     <ui:insert name="left_menu">
-                         <ui:include src="/templates/left_menu.xhtml"/>
-                     </ui:insert>
+        <h:head>
+            <title> Информационный центр </title>
+            <h:outputStylesheet library="css" name="style_main.css"/>
+            <h:outputScript library="js" name="functions.js" target="head"/>
+        </h:head>
+        <h:body>
+
+            <p:ajaxStatus id="ajaxStatusPanel">
+                <f:facet name="start">
+                    <div id="loading_wrapper">
+                        <p>#{msg.loading}...</p>
+                    </div>
+                </f:facet>
+                
+                <f:facet name="complete">
+                    <h:outputText value="" />
+                </f:facet>
+            </p:ajaxStatus>
+
+            <div class="container">
+
+                <div class="header">
+                    <ui:insert name="header">
+                        <ui:include src="/templates/header.xhtml"/>
+                    </ui:insert> 
                 </div>
-                 
-                <div class="pager">
-                    <h:panelGroup id="pages1" layout="block">
-                    <ui:insert name="paginator">
-                         <ui:include src="/templates/paginator.xhtml"/>
-                     </ui:insert>
+
+                <div class="man_count">
+                    <h:panelGroup id="manCount" layout="block">
+                        <ui:insert name="man_count">
+                            найдено сотрудников
+                        </ui:insert>
                     </h:panelGroup>
                 </div>
-                
-                 <div class="content">
-                     <h:panelGroup id="manList" layout="block">
-                     <ui:insert name="content">
-                        контент
-                     </ui:insert>
-                     </h:panelGroup>
+
+                <div class="middle">
+
+                    <div class="left_menu">
+                        <ui:insert name="left_menu">
+                            <ui:include src="/templates/left_menu.xhtml"/>
+                        </ui:insert>
+                    </div>
+
+                    <div class="content">
+                        <h:panelGroup id="manList" layout="block">
+                            <ui:insert name="content">
+                                контент
+                            </ui:insert>
+                        </h:panelGroup>
+                    </div>
+
+                    <div style="clear: both;">&nbsp;</div>
+
                 </div>
-                
-                <div class="pager">
-                     <h:panelGroup id="pages2" layout="block">
-                    <ui:insert name="paginator">
-                         <ui:include src="/templates/paginator.xhtml"/>
-                     </ui:insert>
-                     </h:panelGroup>
+
+                <div class="footer">
+                    <ui:insert name="footer">
+                        <ui:include src="/templates/footer.xhtml"/>
+                    </ui:insert>
                 </div>
-                 
-                <div style="clear: both;">&nbsp;</div>
-                
+
             </div>
-            
-            <div class="footer">
-                <ui:insert name="footer">
-                    <ui:include src="/templates/footer.xhtml"/>
-                </ui:insert>
-            </div>
-            
-        </div>
-    </h:body>
+        </h:body>
     </f:view>
 </html>
 
