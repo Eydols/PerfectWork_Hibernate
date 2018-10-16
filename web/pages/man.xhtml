@@ -14,10 +14,12 @@
         <ui:composition template="/templates/perfect_template.xhtml">
 
             <ui:define name="man_count">
-                <h:outputText value="#{msg.man_count} #{manListController.pager.totalManCount}"></h:outputText>
+                <h:outputText value="#{msg.man_count} #{manListController.pager.totalManCount}" id="manCount"></h:outputText>
             </ui:define>
 
             <ui:define name="content" >
+                
+                <p:growl life="3000" id="growlMessage" globalOnly=""
 
                 <h:form id="manForm">
 
