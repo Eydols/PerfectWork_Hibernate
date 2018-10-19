@@ -19,7 +19,6 @@ public class Man  implements java.io.Serializable {
      private String otchestvo;
      private String birthDate;
      private String photo;
-     private Boolean edit;
 
     public Man() {
     }
@@ -28,7 +27,7 @@ public class Man  implements java.io.Serializable {
     public Man(int id) {
         this.id = id;
     }
-    public Man(int id, SprDoljnost sprDoljnostByDoljnostId, SprDoljnost sprDoljnostByDoljnost2Id, SprFirm sprFirmByFirmId, SprFirm sprFirmByFirm2Id, String surname, String name, String otchestvo, String birthDate, String photo, Boolean edit) {
+    public Man(int id, SprDoljnost sprDoljnostByDoljnostId, SprDoljnost sprDoljnostByDoljnost2Id, SprFirm sprFirmByFirmId, SprFirm sprFirmByFirm2Id, String surname, String name, String otchestvo, String birthDate, String photo) {
        this.id = id;
        this.sprDoljnostByDoljnostId = sprDoljnostByDoljnostId;
        this.sprDoljnostByDoljnost2Id = sprDoljnostByDoljnost2Id;
@@ -39,7 +38,6 @@ public class Man  implements java.io.Serializable {
        this.otchestvo = otchestvo;
        this.birthDate = birthDate;
        this.photo = photo;
-       this.edit = edit;
     }
    
     public int getId() {
@@ -111,13 +109,6 @@ public class Man  implements java.io.Serializable {
     
     public void setPhoto(String photo) {
         this.photo = photo;
-    }
-    public Boolean getEdit() {
-        return edit;
-    }
-
-    public void setEdit(Boolean edit) {
-        this.edit = edit;
     }
 
 }

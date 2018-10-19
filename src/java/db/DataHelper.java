@@ -9,9 +9,9 @@ import entity.SprFirm;
 import enums.SearchType;
 import java.util.List;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
@@ -28,6 +28,7 @@ public class DataHelper {
     private DetachedCriteria manListCriteria;
 
     private DataHelper() {
+
         prepareCriterias();
         sessionFactory = HibernateUtil.getSessionFactory();
     }
@@ -117,19 +118,36 @@ public class DataHelper {
         pager.setList(list);
     }
 
-    public void update() {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.getTransaction();
-        transaction.begin();
-        for (Object object : pager.getList()) {
-            Man man = (Man) object;
-            if (man.getEdit()) {
-                session.update(man);
-            }
-        }
-        transaction.commit();
-        session.flush();
-        session.close();
+    public void updateMan(Man man) {
+        Query query = getSession().createQuery("update Man set id = :id, "
+                + " surname = :surname, "
+                + " name = :name, "
+                + " otchestvo = :otchestvo, "
+                + " birthDate = :birthDate, "
+                //+ " photo = :photo, " - пока это поле мы не обновляем
+                + " sprDoljnostByDoljnostId = :sprDoljnostByDoljnostId, "
+                + " sprDoljnostByDoljnost2Id = :sprDoljnostByDoljnost2Id, "
+                + " sprFirmByFirmId = :sprFirmByFirmId, "
+                + " sprFirmByFirm2Id = :sprFirmByFirm2Id "
+                + " where id = :id");
+
+        query.setParameter("id", man.getId());
+        query.setParameter("surname", man.getSurname());
+        query.setParameter("name", man.getName());
+        query.setParameter("otchestvo", man.getOtchestvo());
+        query.setParameter("birthDate", man.getBirthDate());
+        // query.setParameter("photo", man.getPhoto()); - пока это поле мы не обновляем
+        query.setParameter("sprDoljnostByDoljnostId", man.getSprDoljnostByDoljnostId());
+        query.setParameter("sprDoljnostByDoljnost2Id", man.getSprDoljnostByDoljnost2Id());
+        query.setParameter("sprFirmByFirmId", man.getSprFirmByFirmId());
+        query.setParameter("sprFirmByFirm2Id", man.getSprFirmByFirm2Id());
+
+        int result = query.executeUpdate();
+    }
+
+    public void deleteMan(Man man) {
+        Session session = getSession();
+        session.delete(man);
     }
 
     private void prepareCriterias(Criterion criterion) {
@@ -140,6 +158,7 @@ public class DataHelper {
         manCountCriteria = DetachedCriteria.forClass(Man.class, "m");
         createAliases(manCountCriteria);
         manCountCriteria.add(criterion);
+
     }
 
     private void prepareCriterias() {

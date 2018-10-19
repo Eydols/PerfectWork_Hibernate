@@ -46,7 +46,7 @@
                         <f:facet name="footer">
                             <p:panelGrid styleClass="login_button_ajax" columns="2" columnClasses="col1, col2">
                                 <p:commandButton id="btnLogin" action="#{user.login()}" value="#{msg.entry}" styleClass="login_button" update="login_form" 
-                                                 onclick="this.disabled = true" oncomplete="this.disabled=true"/> <!--перенаправляет пользователя на страницу man.xhtml, причем используется тип навигации redirect (по умолчанию forward), т.е. переход на страницу man.xhtml отображается в адресной строке--> 
+                                                 onclick="this.disabled = true;" oncomplete="this.disabled=true"/> <!--перенаправляет пользователя на страницу man.xhtml, причем используется тип навигации redirect (по умолчанию forward), т.е. переход на страницу man.xhtml отображается в адресной строке--> 
 
                                 <p:ajaxStatus id="ajaxStatusPanel">
 

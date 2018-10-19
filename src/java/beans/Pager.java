@@ -1,7 +1,7 @@
 package beans;
 
+import db.DataHelper;
 import entity.Man;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Pager {
@@ -14,7 +14,7 @@ public class Pager {
     private int from;
     private int to;
 
-    public Pager() {
+    public Pager() {  
     }
 
     public static Pager getInstance() {
