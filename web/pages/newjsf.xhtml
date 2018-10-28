@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <p:dialog id="editDialog" modal="true" widgetVar="dlgEditMan" dynamic="true" resizable="false" header="#{msg.edit_man_header}" closable="false">
+
+            <h:form id="formEditMan" rendered="#{manListController.editMode}" >
+                
+                <p:panelGrid columns="2" columnClasses="col1, col2" styleClass="edit_man_table">
+                    
+                    <p:panel id="imagePanel">
+                        <p:graphicImage id="manImage" value="#{imageController.defaultImage}" width="110" height="150"/>
+                        <h:form id="formUpload" enctype="multipart/form-data">
+                            <p:fileUpload id="imageUpload" label="#{msg.load}" fileUploadListener="#{imageController.handleFileUpload}" update="manNewImage messages" 
+                                          sizeLimit="#{imageController.imageMazSize}" allowTypes="/(\.|\/)(gif|jpeg|png)$/" multiple="false" auto="true"/>
+                            <p:graphicImage id="manNewImage" value="#{imageController.uploadedImage}" library="images" width="110" height="150"/>
+                            <p:messages id="messages" showDetail="true"/>
+                        </h:form>
+                    </p:panel>
+                    <p:panel>
+                        <p:panelGrid id="manDetails" columns="2">
+                    <strong>ФАМИЛИЯ:</strong>
+                    <p:inputText id="inputManSurname" value="#{manListController.selectedMan.surname}" required="true" requiredMessage="#{msg.required_field}" />
+
+                    <strong>ИМЯ:</strong>
+                    <p:inputText id="inputManName" value="#{manListController.selectedMan.name}" required="true" requiredMessage="#{msg.required_field}" size="60"/>
+
+                    <strong>ОТЧЕСТВО:</strong>
+                    <p:inputText id="inputManOtchestvo" value="#{manListController.selectedMan.otchestvo}" required="true" requiredMessage="#{msg.required_field}" size="60"/>
+
+                    <strong>ДАТА РОЖДЕНИЯ:</strong>
+                    <p:inputText id="inputManBirthDate" value="#{manListController.selectedMan.birthDate}" required="true" requiredMessage="#{msg.required_field}" size="60"/>
+
+                    <strong>ДОЛЖНОСТЬ:</strong>
+                    <h:selectOneMenu value="#{manListController.selectedMan.sprDoljnostByDoljnostId}" converter="#{doljnostController}">
+                        <f:selectItems value="#{doljnostController.selectItems}"/>
+                    </h:selectOneMenu>
+
+                    <strong>ФИРМА:</strong>
+                    <h:selectOneMenu value="#{manListController.selectedMan.sprFirmByFirmId}" converter="#{firmController}">
+                        <f:selectItems value="#{firmController.selectItems}"/>
+                    </h:selectOneMenu>
+
+                    <strong>ДОЛЖНОСТЬ2:</strong>
+                    <h:selectOneMenu value="#{manListController.selectedMan.sprDoljnostByDoljnost2Id}" converter="#{doljnostController}">
+                        <f:selectItems value="#{doljnostController.selectItems}"/>
+                    </h:selectOneMenu>
+
+                    <strong>ФИРМА2:</strong>
+                    <h:selectOneMenu value="#{manListController.selectedMan.sprFirmByFirm2Id}" converter="#{firmController}">
+                        <f:selectItems value="#{firmController.selectItems}"/>
+                    </h:selectOneMenu>
+
+                    <p:commandButton styleClass="button-update" value="#{msg.save}" onclick="PF('dlgEditMan').hide()"
+                                     update=":formEditMan :manForm:manList :manCount :growlMessage" action="#{manListController.updateMan()}" /> <!-- кнопка Сохранить -->
+
+                    <p:commandButton action="#{manListController.cancelEditMode()}" value="#{msg.cancel}" immediate="true" global="false" /> <!-- кнопка Отмена -->
+                    </p:panel>
+                </p:panelGrid>
+            </h:form>
+        </p:dialog>
+    </h:body>
+</html>
+

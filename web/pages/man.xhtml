@@ -21,51 +21,7 @@
 
                 <p:growl life="3000" id="growlMessage" globalOnly="true"/>
 
-                <p:dialog modal="true" widgetVar="dlgEditMan" dynamic="true" resizable="false">
-
-                    <h:form id="formEditMan" rendered="#{manListController.editModeView}" >
-                        <p:panelGrid id="manDetails" columns="2" columnClasses="col1, col2" styleClass="edit_man_table">
-
-                            <strong>ФАМИЛИЯ:</strong>
-                            <p:inputText id="inputManSurname" value="#{manListController.selectedMan.surname}" required="true" requiredMessage="#{msg.required_field}" />
-
-                            <strong>ИМЯ:</strong>
-                            <p:inputText id="inputManName" value="#{manListController.selectedMan.name}" required="true" requiredMessage="#{msg.required_field}" size="60"/>
-
-                            <strong>ОТЧЕСТВО:</strong>
-                            <p:inputText id="inputManOtchestvo" value="#{manListController.selectedMan.otchestvo}" required="true" requiredMessage="#{msg.required_field}" size="60"/>
-
-                            <strong>ДАТА РОЖДЕНИЯ:</strong>
-                            <p:inputText id="inputManBirthDate" value="#{manListController.selectedMan.birthDate}" required="true" requiredMessage="#{msg.required_field}" size="60"/>
-
-                            <strong>ДОЛЖНОСТЬ:</strong>
-                            <h:selectOneMenu value="#{manListController.selectedMan.sprDoljnostByDoljnostId}" converter="#{doljnostController}">
-                                <f:selectItems value="#{doljnostController.selectItems}"/>
-                            </h:selectOneMenu>
-
-                            <strong>ФИРМА:</strong>
-                            <h:selectOneMenu value="#{manListController.selectedMan.sprFirmByFirmId}" converter="#{firmController}">
-                                <f:selectItems value="#{firmController.selectItems}"/>
-                            </h:selectOneMenu>
-
-                            <strong>ДОЛЖНОСТЬ2:</strong>
-                            <h:selectOneMenu value="#{manListController.selectedMan.sprDoljnostByDoljnost2Id}" converter="#{doljnostController}">
-                                <f:selectItems value="#{doljnostController.selectItems}"/>
-                            </h:selectOneMenu>
-
-                            <strong>ФИРМА2:</strong>
-                            <h:selectOneMenu value="#{manListController.selectedMan.sprFirmByFirm2Id}" converter="#{firmController}">
-                                <f:selectItems value="#{firmController.selectItems}"/>
-                            </h:selectOneMenu>
-
-                            <p:commandButton styleClass="button-update" value="#{msg.save}" onclick="PF('dlgEditMan').hide()"
-                                             update=":formEditMan :manForm:manList :manCount :growlMessage" action="#{manListController.updateMan()}" /> <!-- кнопка Сохранить -->
-
-                            <p:commandButton action="#{manListController.cancelEditMode()}" value="#{msg.cancel}" immediate="true" global="false" /> <!-- кнопка Отмена -->
-
-                        </p:panelGrid>
-                    </h:form>
-                </p:dialog>
+                <ui:include src="editMan.xhtml"/>
 
                 <h:form id="manForm">
 
@@ -150,7 +106,7 @@
                                 </h:outputLink></p>
                         </p:column>
                         <!-- обложки документов (окончание) -->
-                        
+
                         <p:column rendered="#{request.isUserInRole('ADMIN')}">
                          <!--   <p:commandLink  actionListener="#{manListController.switchEditMode()}" title="#{msg.edit_man}" update=":formEditMan:manDetails" onclick="PF('dlgEditMan').show()"> <! ссылка Редактировать 
                                 <h:graphicImage library="images" name="edit.jpg" height="40" width="40"/>
@@ -167,7 +123,7 @@
                                 <f:setPropertyActionListener value="#{m}" target="#{manListController.selectedMan}"/>
                             </p:commandLink>
                         </p:column> 
-                        
+
                     </p:dataTable>
 
                     <p:confirmDialog widgetVar="dlgDeleteMan" header="#{msg.confirm}" message="#{msg.delete_confirm}?" width="300px" styleClass="dialog_delete">

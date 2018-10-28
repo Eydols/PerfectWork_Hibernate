@@ -11,6 +11,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
+import javax.faces.event.ActionListener;
 import javax.faces.event.ValueChangeEvent;
 import models.ManListDataModel;
 import org.primefaces.component.datatable.DataTable;
@@ -21,7 +23,7 @@ import org.primefaces.model.LazyDataModel;
 @SessionScoped
 public class ManListController implements Serializable {
 
-    private Man selectedMan;
+    private Man selectedMan = null;
     private DataTable dataTable;
 
     private DataHelper dataHelper = DataHelper.getInstance();
@@ -32,7 +34,8 @@ public class ManListController implements Serializable {
     private SearchType selectedSearchType = SearchType.ALL_FIRM; // хранит выбранный тип поиска, по умолчанию - все организации
     private Pager pager = Pager.getInstance();
 
-    private boolean editModeView = false; // отображение режима редактирования
+    private boolean editMode = false; // отображение режима редактирования
+    private boolean addMode = false; // отображение режима добавления сотрудника
 
     public ManListController() {
         manListModel = new ManListDataModel();
@@ -53,15 +56,20 @@ public class ManListController implements Serializable {
         return "man";
     }
 
-    public void updateMan() { // обновляет измененные данные сотудников после редактирования
-        dataHelper.updateMan(selectedMan);
-        cancelEditMode();
-        dataHelper.populateList();
+    public ActionListener saveListener() { // обновляет измененные данные сотудников после редактирования
+        return new ActionListener() {
+            @Override
+            public void processAction(ActionEvent event) {
+                dataHelper.updateMan(selectedMan);
+                cancelEditMode();
+                dataHelper.populateList();
 
-        ResourceBundle bundle = ResourceBundle.getBundle("nls.messages", FacesContext.getCurrentInstance().getViewRoot().getLocale());
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(bundle.getString("updated")));
+                ResourceBundle bundle = ResourceBundle.getBundle("nls.messages", FacesContext.getCurrentInstance().getViewRoot().getLocale());
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(bundle.getString("updated")));
 
-        dataTable.setFirst(calcSelectedPage());
+                dataTable.setFirst(calcSelectedPage());
+            }
+        };
     }
 
     public void deleteMan() {
@@ -70,31 +78,30 @@ public class ManListController implements Serializable {
 
         ResourceBundle bundle = ResourceBundle.getBundle("nls.messages", FacesContext.getCurrentInstance().getViewRoot().getLocale());
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(bundle.getString("deleted")));
-        
+
         dataTable.setFirst(calcSelectedPage());
     }
-    
+
     private int calcSelectedPage() {
-    int page = dataTable.getPage();// текущий номер страницы (индексация с нуля)
-    
-    int leftBound = pager.getTo()*(page-1);
-    int rightBound = pager.getTo()*page;
-    boolean goPrevPage = pager.getTotalManCount()>leftBound & pager.getTotalManCount() <= rightBound;
-    if (goPrevPage)
-    {
-    page--;
-    }
-    return (page>0) ? page*pager.getTo() : 0;
+        int page = dataTable.getPage();// текущий номер страницы (индексация с нуля)
+
+        int leftBound = pager.getTo() * (page - 1);
+        int rightBound = pager.getTo() * page;
+        boolean goPrevPage = pager.getTotalManCount() > leftBound & pager.getTotalManCount() <= rightBound;
+        if (goPrevPage) {
+            page--;
+        }
+        return (page > 0) ? page * pager.getTo() : 0;
     }
 
 //</editor-fold>
 //<editor-fold defaultstate="collapsed" desc="режим редактирования">
     public void switchEditMode() {
-        editModeView = true;
+        editMode = true;
     }
 
-    public void cancelEditMode() { // выполнятся при нажатии кнопки Отмена в режиме редактирования на странице man.xhtml
-        editModeView = false;
+    public void cancelEditMode() { // выполнятся при нажатии кнопки Отмена на странице editMan.xhtml
+        editMode = false;
         RequestContext.getCurrentInstance().execute("PF('dlgEditMan').hide()");
     }
 //</editor-fold>
@@ -129,7 +136,7 @@ public class ManListController implements Serializable {
     public void setDataTable(DataTable dataTable) {
         this.dataTable = dataTable;
     }
-    
+
     public Man getSelectedMan() {
         return selectedMan;
     }
@@ -154,12 +161,20 @@ public class ManListController implements Serializable {
         this.selectedSearchType = selectedSearchType;
     }
 
-    public boolean isEditModeView() {
-        return editModeView;
+    public boolean isEditMode() {
+        return editMode;
     }
 
-    public void setEditModeView(boolean editModeView) {
-        this.editModeView = editModeView;
+    public void setEditMode(boolean editMode) {
+        this.editMode = editMode;
+    }
+    
+     public boolean isAddMode() {
+        return addMode;
+    }
+
+    public void setAddMode(boolean addMode) {
+        this.addMode = addMode;
     }
 
     public LazyDataModel<Man> getManListModel() {

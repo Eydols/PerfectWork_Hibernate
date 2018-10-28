@@ -19,6 +19,7 @@ public class Man  implements java.io.Serializable {
      private String otchestvo;
      private String birthDate;
      private String photo;
+     private boolean imageEdited;
 
     public Man() {
     }
@@ -109,6 +110,14 @@ public class Man  implements java.io.Serializable {
     
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+    
+    public boolean isImageEdited() {
+        return imageEdited;
+    }
+
+    public void setImageEdited(boolean imageEdited) {
+        this.imageEdited = imageEdited;
     }
 
 }

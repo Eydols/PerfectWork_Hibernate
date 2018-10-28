@@ -124,7 +124,7 @@ public class DataHelper {
                 + " name = :name, "
                 + " otchestvo = :otchestvo, "
                 + " birthDate = :birthDate, "
-                //+ " photo = :photo, " - пока это поле мы не обновляем
+                + " photo = :photo, " 
                 + " sprDoljnostByDoljnostId = :sprDoljnostByDoljnostId, "
                 + " sprDoljnostByDoljnost2Id = :sprDoljnostByDoljnost2Id, "
                 + " sprFirmByFirmId = :sprFirmByFirmId, "
@@ -136,7 +136,7 @@ public class DataHelper {
         query.setParameter("name", man.getName());
         query.setParameter("otchestvo", man.getOtchestvo());
         query.setParameter("birthDate", man.getBirthDate());
-        // query.setParameter("photo", man.getPhoto()); - пока это поле мы не обновляем
+        query.setParameter("photo", man.getPhoto());
         query.setParameter("sprDoljnostByDoljnostId", man.getSprDoljnostByDoljnostId());
         query.setParameter("sprDoljnostByDoljnost2Id", man.getSprDoljnostByDoljnost2Id());
         query.setParameter("sprFirmByFirmId", man.getSprFirmByFirmId());
