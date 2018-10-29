@@ -12,7 +12,11 @@
 
     <h:body>
         <ui:composition template="/templates/perfect_template.xhtml">
-
+            
+           
+            
+            
+            
             <ui:define name="man_count">
                 <h:outputText value="#{msg.man_count} #{manListController.pager.totalManCount}"></h:outputText>
             </ui:define>
@@ -108,9 +112,9 @@
                         <!-- обложки документов (окончание) -->
 
                         <p:column rendered="#{request.isUserInRole('ADMIN')}">
-                         <!--   <p:commandLink  actionListener="#{manListController.switchEditMode()}" title="#{msg.edit_man}" update=":formEditMan:manDetails" onclick="PF('dlgEditMan').show()"> <! ссылка Редактировать 
+                         <!--   <p:commandLink  actionListener="&{manListController.switchEditMode()}" title="&{msg.edit_man}" update=":formEditMan:manDetails" onclick="PF('dlgEditMan').show()"> <! ссылка Редактировать 
                                 <h:graphicImage library="images" name="edit.jpg" height="40" width="40"/>
-                                <f:setPropertyActionListener value="#{m}" target="#{manListController.selectedMan}"/>
+                                <f:setPropertyActionListener value="&{m}" target="&{manListController.selectedMan}"/>
                             </p:commandLink> -->
 
                             <p:commandButton action="#{manListController.switchEditMode()}" update=":formEditMan:manDetails" 
@@ -128,7 +132,7 @@
 
                     <p:confirmDialog widgetVar="dlgDeleteMan" header="#{msg.confirm}" message="#{msg.delete_confirm}?" width="300px" styleClass="dialog_delete">
                         <h:panelGrid columns="2" style="margin: 0 auto; width: 150px;">
-                            <p:commandButton id="btnDeleteMan" value="#{msg.yes}" action="#{manListController.deleteMan()}" styleClass="ui-confirmdialog-yes"
+                            <p:commandButton id="btnDeleteMan" value="#{msg.yes}" actionListener="#{imageController.deleteDefaultImage()}" action="#{manListController.deleteMan()}" styleClass="ui-confirmdialog-yes"
                                              icon="ui-icon-check" update=":manForm:manList :manCount :growlMessage" onclick="PF('dlgDeleteMan').hide()"/>
                             <p:commandButton value="#{msg.no}" styleClass="ui-confirmdialog-no" icon="ui-icon-close" onclick="PF('dlgDeleteMan').hide()"/>
                         </h:panelGrid>

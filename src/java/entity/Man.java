@@ -24,7 +24,6 @@ public class Man  implements java.io.Serializable {
     public Man() {
     }
 
-	
     public Man(int id) {
         this.id = id;
     }

@@ -42,6 +42,13 @@
                     </h:selectOneMenu>
                 </h:form>
             </div>
+            
+            <h:form id="add-action" rendered="#{request.isUserInRole('ADMIN')}">
+                <p:commandLink actionListener="#{manListController.switchAddMode()}" update=":formEditMan">
+                    <h:outputText value="#{msg.add_man}" title="#{msg.add_man}"/>
+                </p:commandLink>
+                
+            </h:form>
 
         </ui:composition>
     </h:body>

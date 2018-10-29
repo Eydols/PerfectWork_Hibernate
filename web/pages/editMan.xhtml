@@ -10,7 +10,7 @@
     <h:body>
         <p:dialog modal="true" widgetVar="dlgEditMan" dynamic="true" resizable="false" header="#{msg.edit_man_header}" closable="false">
 
-            <h:form id="formEditMan" rendered="#{manListController.editMode}" >
+            <h:form id="formEditMan" rendered="#{manListController.editMode or manListController.addMode}" >
                 <p:panelGrid id="manDetails" columns="2" columnClasses="col1, col2" styleClass="edit_man_table">
 
 
@@ -65,7 +65,7 @@
                             <f:actionListener binding="#{manListController.saveListener()}"/>
                         </p:commandButton>
 
-                        <p:commandButton action="#{manListController.cancelEditMode()}" icon="ui-iconclose" value="#{msg.cancel}" immediate="true" global="false" > <!-- кнопка Отмена -->
+                        <p:commandButton action="#{manListController.cancelModes()}" icon="ui-iconclose" value="#{msg.cancel}" immediate="true" global="false" > <!-- кнопка Отмена -->
                             <f:actionListener binding="#{imageController.clearListener()}"/>
                         <!--    <f:actionListener binding="#{contentController.clearListener()}"/>             -->    
                         </p:commandButton>

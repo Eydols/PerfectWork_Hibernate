@@ -33,6 +33,7 @@ public class ImageController implements Serializable {
     private ManListController manListController;
 
     public ImageController() {
+        
     }
 
     public void deleteDefaultImage() { // удаляет предыдущее изображение из папки /photos

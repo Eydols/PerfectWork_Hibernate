@@ -6,7 +6,7 @@
     <class name="entity.Man" table="man" catalog="handbook" optimistic-lock="version">
         <id name="id" type="int">
             <column name="id" />
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
         <many-to-one name="sprDoljnostByDoljnostId" class="entity.SprDoljnost" fetch="join">
             <column name="doljnost_id" />

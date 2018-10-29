@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -47,7 +48,6 @@ public class ManListController implements Serializable {
     }
 
     public String fillManBySearch() {
-
         if (selectedSearchType == SearchType.KSR || selectedSearchType == SearchType.PERFECT) { // потом можно попробовать использовать оператор switch
             DataHelper.getInstance().getManByString(currentSearchString, selectedSearchType, pager);
         } else {
@@ -60,8 +60,13 @@ public class ManListController implements Serializable {
         return new ActionListener() {
             @Override
             public void processAction(ActionEvent event) {
-                dataHelper.updateMan(selectedMan);
-                cancelEditMode();
+
+                if (editMode) {
+                    dataHelper.updateMan(selectedMan);
+                } else if (addMode) {
+                    dataHelper.addMan(selectedMan);
+                }
+                cancelModes();
                 dataHelper.populateList();
 
                 ResourceBundle bundle = ResourceBundle.getBundle("nls.messages", FacesContext.getCurrentInstance().getViewRoot().getLocale());
@@ -73,6 +78,7 @@ public class ManListController implements Serializable {
     }
 
     public void deleteMan() {
+        
         dataHelper.deleteMan(selectedMan);
         dataHelper.populateList();
 
@@ -95,13 +101,25 @@ public class ManListController implements Serializable {
     }
 
 //</editor-fold>
-//<editor-fold defaultstate="collapsed" desc="режим редактирования">
+//<editor-fold defaultstate="collapsed" desc="режимы редактирования и добавления сотрудника">
     public void switchEditMode() {
         editMode = true;
     }
 
-    public void cancelEditMode() { // выполнятся при нажатии кнопки Отмена на странице editMan.xhtml
-        editMode = false;
+    public void switchAddMode() {
+        System.out.println(editMode);
+        addMode = true;
+        selectedMan = new Man();
+        RequestContext.getCurrentInstance().execute("PF('dlgEditMan').show()");
+    }
+
+    public void cancelModes() { // выполнятся при нажатии кнопки Отмена на странице editMan.xhtml
+        if (addMode) {
+            addMode = false;
+        }
+        if (editMode) {
+            editMode = false;
+        }
         RequestContext.getCurrentInstance().execute("PF('dlgEditMan').hide()");
     }
 //</editor-fold>
@@ -115,14 +133,14 @@ public class ManListController implements Serializable {
     }
 
     public void changeManCountOnPage(ValueChangeEvent e) { //выполняется при выборе (из выпадающего списка) пользователем количества отображаемых на одной странице сотрудников 
-        cancelEditMode();
+        cancelModes();
         //pager.setManCountOnPage(Integer.valueOf(e.getNewValue().toString()).intValue());
         // pager.setSelectedPageNumber(1);
         DataHelper.getInstance().runManListCriteria();
     }
 
     public void selectPage() { // отрабатывает после нажатия на к-л страницу в постраничности
-        cancelEditMode();
+        cancelModes();
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         //pager.setSelectedPageNumber(Integer.valueOf(params.get("page_number")));
         DataHelper.getInstance().runManListCriteria();
@@ -168,8 +186,8 @@ public class ManListController implements Serializable {
     public void setEditMode(boolean editMode) {
         this.editMode = editMode;
     }
-    
-     public boolean isAddMode() {
+
+    public boolean isAddMode() {
         return addMode;
     }
 
@@ -187,6 +205,6 @@ public class ManListController implements Serializable {
 
     public Pager getPager() {
         return pager;
-    }
+    }    
 //</editor-fold>
 }

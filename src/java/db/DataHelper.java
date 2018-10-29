@@ -124,7 +124,7 @@ public class DataHelper {
                 + " name = :name, "
                 + " otchestvo = :otchestvo, "
                 + " birthDate = :birthDate, "
-                + " photo = :photo, " 
+                + " photo = :photo, "
                 + " sprDoljnostByDoljnostId = :sprDoljnostByDoljnostId, "
                 + " sprDoljnostByDoljnost2Id = :sprDoljnostByDoljnost2Id, "
                 + " sprFirmByFirmId = :sprFirmByFirmId, "
@@ -148,6 +148,11 @@ public class DataHelper {
     public void deleteMan(Man man) {
         Session session = getSession();
         session.delete(man);
+    }
+
+    public void addMan(Man man) {
+        Session session = getSession();
+        session.save(man);
     }
 
     private void prepareCriterias(Criterion criterion) {
