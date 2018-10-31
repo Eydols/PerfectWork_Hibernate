@@ -25,6 +25,10 @@
                     <h:commandLink action="#{user.logout()}" value="#{msg.exit}"/> <!-- при нажатии на кнопку Выход отрабатывает метод exit(), который возвращает значение "exit", -->                            
                 </h:form>                                                                   <!-- в свою очередь навигация настроена т.о., что при возвращении методом данного значение -->
             </div>                                                                          <!-- происходит перенаправление на страницу index.xhtml (см. файл faces-config.xml)-->
+            
+            <h:form>
+                <p:commandLink value="#{msg.feedback}" action="#{mailController.showMailForm()}" styleClass="feedback"/>
+            </h:form>
 
             <div class="search_div">
                 <h:form styleClass="search_form">
